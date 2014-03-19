@@ -35,7 +35,7 @@ if ('development' == app.get('env')) {
 
 // routes for pure html5 with EJS
 // index
-app.get('/pure/index', pureGuestbookRoutes.index);
+app.get('/pure/guestbook', pureGuestbookRoutes.index);
 // guestbook
 app.post('/pure/dedication', pureDedicationRoutes.create);
 app.post('/pure/dedication/delete', pureDedicationRoutes.remove);
