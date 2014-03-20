@@ -6,7 +6,7 @@ exports.create = function(req, res){
     req.body.dedication.text,
     function(err, dedications){
       console.info("created dedication with id %s", dedications[0]._id);
-      res.redirect('/pure/index');
+      res.redirect('/pure/guestbook');
     }
   );
 };
@@ -22,7 +22,7 @@ exports.remove = function(req, res){
       else{
         console.info("failed to remove dedication with id %s", id);
       }
-      res.redirect('/pure/index');
+      res.redirect('/pure/guestbook');
     }
   );
 };

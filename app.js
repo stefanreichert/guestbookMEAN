@@ -7,7 +7,8 @@ var express = require('express');
 var pureGuestbookRoutes = require('./routes/pure/guestbookRoutes');
 var pureDedicationRoutes = require('./routes/pure/dedicationRoutes');
 var restDedicationRoutes = require('./routes/rest/dedicationRoutes');
-var dbConnection = require('./db/dbConnection');
+var connector = require('./db/connector');
+var Promise = require('promise');
 var http = require('http');
 var path = require('path');
 
@@ -34,9 +35,9 @@ if ('development' == app.get('env')) {
 }
 
 // routes for pure html5 with EJS
-// index
-app.get('/pure/guestbook', pureGuestbookRoutes.index);
 // guestbook
+app.get('/pure/guestbook', pureGuestbookRoutes.guestbook);
+// dedications
 app.post('/pure/dedication', pureDedicationRoutes.create);
 app.post('/pure/dedication/delete', pureDedicationRoutes.remove);
 
@@ -45,16 +46,37 @@ app.get('/dedication', restDedicationRoutes.all);
 app.post('/dedication', restDedicationRoutes.create);
 app.delete('/dedication/:id', restDedicationRoutes.remove);
 
-var server = http.createServer(app).listen(app.get('port'), function(){
-  dbConnection.initialize(function(err){
-    if (err) {
-      console.error('Failed to connect to MongoDB: %s', err);
-      console.log('Express server is shutting down.');
-      server.close();
-    }
-    else{
-      console.log('MongoDB connected successfully.');
-      console.log('Express server listening on port %d.',app.get('port'));
-    }
+var connectDatabase = function () {
+  return new Promise(function (resolve, reject) {
+    connector.connect(function (connection, err){
+      if(err){
+        reject(err);
+      }
+      else{
+        resolve(connection);
+      };
+    });
   });
+}
+
+var startServer = function (){
+  return new Promise(function (resolve, reject){
+    var server = http.createServer(app);
+    server.on('error', function (err) {
+      reject(err);
+    });
+
+    server.listen(app.get('port'), function () {
+      resolve(server);
+    });
+  });
+};
+
+connectDatabase().then(function (connection){
+  console.log('Successfully connected to a MongoDB at %s [name: %s, poolsize: %d]', connection.serverConfig.name, connection.databaseName, connection.serverConfig.poolSize);
+  return startServer();
+}).then(function (server){
+  console.log('Express server listening on localhost:%d.', server._events.request.settings.port);
+}).catch(function (err) {
+  console.error('Failed to start express server: %s', err);
 });

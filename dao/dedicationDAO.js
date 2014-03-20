@@ -3,12 +3,12 @@ var collectionName = 'dedications';
 
 // DAO stuff
 var factory = require('../model/dedicationFactory');
-var dbConnection = require('../db/dbConnection');
+var connector = require('../db/connector');
 var ObjectID = require('mongodb').ObjectID;
     
 var loadAll = function(callback){
     console.info('loading all dedications');
-    dbConnection.db.createCollection(collectionName, function(err, dedications) {
+    connector.connection.createCollection(collectionName, function(err, dedications) {
         if(err) {
             callback(err, []);
         }
@@ -20,7 +20,7 @@ var loadAll = function(callback){
 
 var create = function(author, text, callback){
     console.info('create dedication with author: %s and text: %', author, text);
-    dbConnection.db.createCollection(collectionName, function(err, dedications) {
+    connector.connection.createCollection(collectionName, function(err, dedications) {
         if(err) {
             callback(err, null);
         }
@@ -35,7 +35,7 @@ var create = function(author, text, callback){
 
 var remove = function(id, callback){
     console.info('remove dedication with id: %s', id)
-    dbConnection.db.createCollection(collectionName, function(err, dedications) {
+    connector.connection.createCollection(collectionName, function(err, dedications) {
         if(err) {
             callback(err, null);
         }
