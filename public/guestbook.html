@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app='guestbookApp'>
+<head>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>guestbook (angular)</title>
+  <!-- libraries -->
+  <script src="/lib/angular.js"></script>
+  <script src="/lib/angular-route.js"></script>
+  <script src="/lib/jquery-1.10.2.js"></script>
+  <!-- angular scripts -->
+  <script src="/scripts/guestbook.js"></script>
+  <script src="/scripts/controllers.js"></script>
+  <script src="/scripts/services.js"></script>
+  <script src="/scripts/utils.js"></script>
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
+</head>
+<body>
+  <section class='container' ng-controller='guestbookController'>
+    <section class='row page-header'>
+        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
+    </section>
+    <section class='row'>
+      <section ng-View></section>
+    </section>
+    <section class='row panel panel-default'>
+        <section class="panel-heading">dedications</section>
+        <section class='panel-body'>
+          <section class='row' ng-repeat="dedication in dedications">
+            <div class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{formatDate(dedication.date)}}</em></div>
+            <div class='col-md-8'>{{dedication.text}}</div>
+            <div class='col-md-1'>
+              <button class='btn btn-default btn-xs' ng-click='removeDedication(dedication._id)'><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+          </section>
+      </section>
+    </section>
+  </section>
+  <script src='/lib/bootstrap.min.js'></script>
+</body>
+</html>

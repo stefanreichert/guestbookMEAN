@@ -1,8 +1,8 @@
-var util = angular.module('util', [])
+var util = angular.module('utils', [])
 
 util.factory('formatter', function() {
         
-        var assertTwoDigits = function(value){
+        var assertTwoDigits = function (value){
             if (value.length == 1) {
                 return '0' + value;
             }
@@ -10,7 +10,7 @@ util.factory('formatter', function() {
         }
         
         return {
-            formatDate : function(timestamp){
+            formatDate : function (timestamp){
                 var date = new Date(timestamp);
                 var year = date.getFullYear().toString();
                 var month = (date.getMonth() + 1).toString();
