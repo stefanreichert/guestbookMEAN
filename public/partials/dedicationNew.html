@@ -1,20 +1,18 @@
-<section>
-  <p class="text-info">please leave your dedication.</p>
-  <form class='form-horizontal' role='form'>
-    <section class='form-group'>
-      <label class='col-sm-1 control-label' for='name'>your&nbsp;name*</label>
-      <section class='col-sm-11'>
-        <input  class='form-control' placeholder='your name' ng-model='newAuthor' required/>
-      </section>
+<p class='text'>please leave your dedication.</p>
+<form name="dedicationForm" class='form-horizontal' role='form'>
+  <section class='form-group'>
+    <label class='col-sm-1 control-label' for='name'>your&nbsp;name*</label>
+    <section class='col-sm-11'>
+      <input class='form-control' name="author" placeholder='your name' ng-model='newAuthor' required>
     </section>
-    <section class='form-group'>
-      <label class='col-sm-1 control-label' for='dedication'>dedication*</label>
-      <section class='col-sm-11'>
-        <input class='form-control' placeholder='your dedication' ng-model='newText' required/>
-      </section>
+  </section>
+  <section class='form-group'>
+    <label class='col-sm-1 control-label' for='dedication'>dedication*</label>
+    <section class='col-sm-11'>
+      <input class='form-control' name="text" placeholder='your dedication' ng-model='newText' required>
     </section>
-  </form>
-</section>
+  </section>
+</form>
 <section class='panel btn-toolbar' role='toolbar'>
   <button class='btn btn-info' ng-click='addDedication(newAuthor, newText)'>add dedication</button>
   <a class='btn btn-info' type="button" href='#/guestbook'>cancel</a>

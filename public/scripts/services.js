@@ -1,37 +1,62 @@
-var service = angular.module('services', []);
+var services = angular.module('services', ['ngResource', 'angularSpinner', 'toaster']);
 
-service.factory('guestbookService', ['$http', function ($http) {
+services.service('guestbookService', ['$resource', function ($resource) {
 
-  return {
+  var Dedication = $resource('dedication/:dedicationId', {dedicationId:'@id'});
 
-    addDedication : function (author, text, callback) {
-      $http.post('/dedication', {'author':author, 'text':text}).
-      success(function(data, status, headers, config) {
-        callback(data, null);
-      }).
-      error(function(data, status, headers, config){
-        callback(data, status);
-      });
-    },
+  this.addDedication = function (author, text) {
+    // create new dedication ith given data
+    var dedication = new Dedication();
+    dedication.author = author;
+    dedication.text = text;
     
-    removeDedication : function (id, callback) {
-      $http.delete('/dedication/' + id).
-      success(function(data, status, headers, config) {
-        callback(data, null);
-     }).
-      error(function(data, status, headers, config){
-        callback(data, status);
+    return dedication.$save().
+      then(function (dedication) {
+        return dedication;
       });
-    },
+  };
+
+  this.removeDedication = function (id) {
+    return Dedication.remove({dedicationId:id}).$promise.
+      then(function (success) {
+        return id;
+      });
+  };
     
-    loadAll : function (callback) {
-      $http.get('/dedication').
-      success(function(data, status, headers, config) {
-        callback(data, null);
-      }).
-      error(function(data, status, headers, config){
-        callback(data, status);
+  this.loadAll = function () {
+    return Dedication.query().$promise.
+      then(function (dedications) {
+        return dedications;
       });
-    }
   }
+}]);
+
+services.service('spinnerService', ['usSpinnerService', function (usSpinnerService) {
+
+    var spinnerID = 'spinner';
+
+    this.startSpinning = function() {
+      usSpinnerService.spin(spinnerID);
+    };
+    
+    this.stopSpinning = function() {
+      usSpinnerService.stop(spinnerID);
+    };
+}]);
+
+services.service('messageService', ['toaster', function (toaster) {
+
+  this.showError = function (message, err){
+    toaster.pop('error', message);
+    console.log(err);
+  };
+
+  this.showSuccess = function (message){
+    toaster.pop('success', message);
+  }
+
+  this.showWarning = function (message){
+    toaster.pop('warning', message);
+  }
+
 }]);

@@ -1,3 +1,5 @@
+var Promise = require('promise');
+
 // prepare the mongodb collection for dedications
 var collectionName = 'dedications';
 
@@ -5,47 +7,81 @@ var collectionName = 'dedications';
 var factory = require('../model/dedicationFactory');
 var connector = require('../db/connector');
 var ObjectID = require('mongodb').ObjectID;
+
+var getDedicationCollection = function(){
+    return new Promise(function (resolve, reject){
+        connector.connection.createCollection(collectionName, function(err, dedications) {
+            if(err) {
+                reject(err);
+            }
+            else{
+                resolve(dedications);
+            }
+        });
+    });
+}
     
-var loadAll = function(callback){
-    console.info('loading all dedications');
-    connector.connection.createCollection(collectionName, function(err, dedications) {
-        if(err) {
-            callback(err, []);
-        }
-        else{
-            dedications.find({}, {sort:{'date':-1}}).toArray(callback);
-        }
+var loadAllInternal = function(dedicationCollection){
+    console.info('load all dedications');
+    return new Promise(function (resolve, reject){
+        dedicationCollection.find({}, {sort:{'date':-1}}).toArray(function(err, allDedications){
+            if(err) {
+                reject(err);
+            }
+            else{
+                console.info("loaded all dedications");
+                resolve(allDedications);
+            }
+        });
     });
 }
 
-var create = function(author, text, callback){
+var createInternal = function(dedicationCollection, author, text){
     console.info('create dedication with author: %s and text: %', author, text);
-    connector.connection.createCollection(collectionName, function(err, dedications) {
-        if(err) {
-            callback(err, null);
-        }
-        else{
-            // create the object
-            var dedication = factory.newInstance(author, text);
-            // insert the new document to the collection
-            dedications.insert(dedication, {safe:true}, callback);
-        }
+    return new Promise(function (resolve, reject){
+        // insert the new document to the collection
+        dedicationCollection.insert(factory.newInstance(author, text), {safe:true}, function(err, newDedications){
+            if(err) {
+                reject(err);
+            }
+            else{
+                console.info("created dedication with id %s", newDedications[0]._id);
+                resolve(newDedications[0]);
+            }
+        });
     });
-};
+}
 
-var remove = function(id, callback){
+var removeInternal = function(dedicationCollection, id){
     console.info('remove dedication with id: %s', id)
-    connector.connection.createCollection(collectionName, function(err, dedications) {
-        if(err) {
-            callback(err, null);
-        }
-        else{
-            // remove the document from the collection
-            dedications.remove({"_id": new ObjectID(id)}, {safe:true}, callback);
-        }
+    return new Promise(function (resolve, reject){
+        // remove the document from the collection
+        dedicationCollection.remove({"_id": new ObjectID(id)}, {safe:true}, function(err){
+            if(err) {
+                reject(err);
+            }
+            else{
+                resolve(id);
+            }
+        });
     });
-};
+}
 
-exports.loadAll = loadAll;
-exports.create = create;
-exports.remove = remove;
+exports.loadAll = function (){
+                    return getDedicationCollection().
+                        then(function (dedicationCollection){
+                            return loadAllInternal(dedicationCollection);
+                        });
+                    }
+exports.create = function (author, text){
+                    return getDedicationCollection().
+                        then(function (dedicationCollection){
+                            return createInternal(dedicationCollection, author, text);
+                        });
+                    }
+exports.remove = function (id){
+                    return getDedicationCollection().
+                        then(function (dedicationCollection){
+                            return removeInternal(dedicationCollection, id);
+                        });
+                    }

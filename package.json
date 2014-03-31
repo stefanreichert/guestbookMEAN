@@ -1,5 +1,7 @@
 {
-  "name": "guestbook_express",
+  "name": "guestbookMEAN",
+  "description": "A guestbook built on the MEAN stack",
+  "author": "Stefan <stefan@wickedshell.net>",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,7 +9,19 @@
   },
   "dependencies": {
     "express": "3.4.8",
-    "ejs": "*",
-    "stylus": "*"
-  }
+    "ejs": "0.8.x",
+    "stylus": "0.42.x",
+    "mongodb": "1.3.x",
+    "promise": "4.0.x"
+  },
+  "devDependencies":{
+    "karma": "0.12.x",
+    "karma-chrome-launcher": "0.1.x",
+    "karma-firefox-launcher": "0.1.3",
+    "karma-jasmine": "0.1.5",
+    "karma-junit-reporter": "0.2.1",
+    "karma-script-launcher": "0.1.0",
+    "node-inspector": "0.7.1"
+  },
+  "engine": "node >= 0.4.1"
 }

@@ -46,19 +46,6 @@ app.get('/dedication', restDedicationRoutes.all);
 app.post('/dedication', restDedicationRoutes.create);
 app.delete('/dedication/:id', restDedicationRoutes.remove);
 
-var connectDatabase = function () {
-  return new Promise(function (resolve, reject) {
-    connector.connect(function (connection, err){
-      if(err){
-        reject(err);
-      }
-      else{
-        resolve(connection);
-      };
-    });
-  });
-}
-
 var startServer = function (){
   return new Promise(function (resolve, reject){
     var server = http.createServer(app);
@@ -72,11 +59,15 @@ var startServer = function (){
   });
 };
 
-connectDatabase().then(function (connection){
-  console.log('Successfully connected to a MongoDB at %s [name: %s, poolsize: %d]', connection.serverConfig.name, connection.databaseName, connection.serverConfig.poolSize);
-  return startServer();
-}).then(function (server){
-  console.log('Express server listening on localhost:%d.', server._events.request.settings.port);
-}).catch(function (err) {
-  console.error('Failed to start express server: %s', err);
-});
+connector.connectToDatabase().
+  then(function (connection){
+    console.log('Successfully connected to a MongoDB at %s [name: %s, poolsize: %d]', connection.serverConfig.name, connection.databaseName, connection.serverConfig.poolSize);
+    return startServer();
+  }).
+  then(function (server){
+    console.log('Express server listening on localhost:%d', server._events.request.settings.port);
+  }).
+  catch(function (err) {
+    console.error('Failed to start express server: %s', err);
+  });
+console.log('Express server starting ...');
