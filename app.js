@@ -4,9 +4,7 @@
  */
 
 var express = require('express');
-var pureGuestbookRoutes = require('./routes/pure/guestbookRoutes');
-var pureDedicationRoutes = require('./routes/pure/dedicationRoutes');
-var restDedicationRoutes = require('./routes/rest/dedicationRoutes');
+var restDedicationRoutes = require('./routes/dedicationRoutes');
 var connector = require('./db/connector');
 var Promise = require('promise');
 var http = require('http');
@@ -34,13 +32,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// routes for pure html5 with EJS
-// guestbook
-app.get('/pure/guestbook', pureGuestbookRoutes.guestbook);
-// dedications
-app.post('/pure/dedication', pureDedicationRoutes.create);
-app.post('/pure/dedication/delete', pureDedicationRoutes.remove);
-
 // REST routes
 app.get('/dedication', restDedicationRoutes.all);
 app.post('/dedication', restDedicationRoutes.create);
@@ -59,6 +50,7 @@ var startServer = function (){
   });
 };
 
+console.log('Express server starting ...');
 connector.connectToDatabase().
   then(function (connection){
     console.log('Successfully connected to a MongoDB at %s [name: %s, poolsize: %d]', connection.serverConfig.name, connection.databaseName, connection.serverConfig.poolSize);
@@ -70,4 +62,3 @@ connector.connectToDatabase().
   catch(function (err) {
     console.error('Failed to start express server: %s', err);
   });
-console.log('Express server starting ...');

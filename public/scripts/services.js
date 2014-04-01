@@ -1,16 +1,10 @@
-var services = angular.module('services', ['ngResource', 'angularSpinner', 'toaster']);
+var services = angular.module('services', ['resources', 'angularSpinner', 'toaster']);
 
-services.service('guestbookService', ['$resource', function ($resource) {
-
-  var Dedication = $resource('dedication/:dedicationId', {dedicationId:'@id'});
+services.service('guestbookService', ['Dedication', function (Dedication) {
 
   this.addDedication = function (author, text) {
     // create new dedication ith given data
-    var dedication = new Dedication();
-    dedication.author = author;
-    dedication.text = text;
-    
-    return dedication.$save().
+    return Dedication.save({author: author, text: text}).$promise.
       then(function (dedication) {
         return dedication;
       });
@@ -32,7 +26,6 @@ services.service('guestbookService', ['$resource', function ($resource) {
 }]);
 
 services.service('spinnerService', ['usSpinnerService', function (usSpinnerService) {
-
     var spinnerID = 'spinner';
 
     this.startSpinning = function() {
@@ -45,18 +38,23 @@ services.service('spinnerService', ['usSpinnerService', function (usSpinnerServi
 }]);
 
 services.service('messageService', ['toaster', function (toaster) {
+  var show = function(type, message){
+    if(message){
+      toaster.pop(type, message);
+    }
+  }
 
   this.showError = function (message, err){
-    toaster.pop('error', message);
+    show('error', message);
     console.log(err);
   };
 
   this.showSuccess = function (message){
-    toaster.pop('success', message);
+    show('success', message);
   }
 
   this.showWarning = function (message){
-    toaster.pop('warning', message);
+    show('warning', message);
   }
 
 }]);

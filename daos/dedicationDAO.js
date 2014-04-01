@@ -4,7 +4,7 @@ var Promise = require('promise');
 var collectionName = 'dedications';
 
 // DAO stuff
-var factory = require('../model/dedicationFactory');
+var factory = require('../models/dedicationFactory');
 var connector = require('../db/connector');
 var ObjectID = require('mongodb').ObjectID;
 
@@ -21,7 +21,7 @@ var getDedicationCollection = function(){
     });
 }
     
-var loadAllInternal = function(dedicationCollection){
+var internalLoadAll = function(dedicationCollection){
     console.info('load all dedications');
     return new Promise(function (resolve, reject){
         dedicationCollection.find({}, {sort:{'date':-1}}).toArray(function(err, allDedications){
@@ -36,7 +36,7 @@ var loadAllInternal = function(dedicationCollection){
     });
 }
 
-var createInternal = function(dedicationCollection, author, text){
+var internalCreate = function(dedicationCollection, author, text){
     console.info('create dedication with author: %s and text: %', author, text);
     return new Promise(function (resolve, reject){
         // insert the new document to the collection
@@ -52,7 +52,7 @@ var createInternal = function(dedicationCollection, author, text){
     });
 }
 
-var removeInternal = function(dedicationCollection, id){
+var internalRemove = function(dedicationCollection, id){
     console.info('remove dedication with id: %s', id)
     return new Promise(function (resolve, reject){
         // remove the document from the collection
@@ -70,18 +70,18 @@ var removeInternal = function(dedicationCollection, id){
 exports.loadAll = function (){
                     return getDedicationCollection().
                         then(function (dedicationCollection){
-                            return loadAllInternal(dedicationCollection);
+                            return internalLoadAll(dedicationCollection);
                         });
                     }
 exports.create = function (author, text){
                     return getDedicationCollection().
                         then(function (dedicationCollection){
-                            return createInternal(dedicationCollection, author, text);
+                            return internalCreate(dedicationCollection, author, text);
                         });
                     }
 exports.remove = function (id){
                     return getDedicationCollection().
                         then(function (dedicationCollection){
-                            return removeInternal(dedicationCollection, id);
+                            return internalRemove(dedicationCollection, id);
                         });
                     }

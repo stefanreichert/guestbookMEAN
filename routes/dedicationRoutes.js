@@ -1,4 +1,4 @@
-var dedicationDAO = require("../../dao/dedicationDAO")
+var dedicationDAO = require('../daos/dedicationDAO')
 
 exports.create = function(req, res){
   if(!req.body.hasOwnProperty('author') || !req.body.hasOwnProperty('text')) {
@@ -39,7 +39,7 @@ exports.remove = function(req, res){
   else{
     dedicationDAO.remove(id).
       then(function (id){
-        console.info("removed dedication with id %s", id);
+        console.info('removed dedication with id %s', id);
         res.json(true);
       }).
       catch(function(err){
