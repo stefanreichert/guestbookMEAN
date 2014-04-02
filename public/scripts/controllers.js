@@ -1,6 +1,6 @@
 'use strict'
 
-var controllers = angular.module('controllers',['services', 'ui.bootstrap']);
+var controllers = angular.module('controllers',['services']);
 
 controllers.controller('newDedicationController', ['$scope', 'guestbookService', function ($scope, guestbookService){
    $scope.newText = '';

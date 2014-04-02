@@ -4,23 +4,22 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>guestbook MEAN</title>
   <!-- libraries -->
-  <script src="/lib/jquery-1.10.2.js"></script>
-  <script src="/lib/angular.js"></script>
-  <script src="/lib/angular-animate.js"></script>
-  <script src="/lib/angular-route.js"></script>
-  <script src="/lib/angular-resource.js"></script>
-  <script src="/lib/angular-spinner.js"></script>
-  <script src="/lib/ui-bootstrap-0.10.0.js"></script>
-  <script src="/lib/ui-bootstrap-tpls-0.10.0.js"></script>
-  <script src="/lib/spin.js"></script>
-  <script src="/lib/toaster.js"></script>
-  <!-- angular scripts -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/angular-route/angular-route.js"></script>
+  <script src="/bower_components/angular-resource/angular-resource.js"></script>
+  <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
+  <script src="/bower_components/spin.js/spin.js"></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <script src="/bower_components/AngularJS-Toaster/toaster.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="/bower_components/AngularJS-Toaster/toaster.css" />
+  <!-- guestbook parts -->
   <script src="/scripts/guestbook.js"></script>
   <script src="/scripts/controllers.js"></script>
   <script src="/scripts/services.js"></script>
   <script src="/scripts/resources.js"></script>
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" />
-  <link rel="stylesheet" href="/stylesheets/toaster.css" />
   <link rel="stylesheet" href="/stylesheets/guestbook.css" />
 </head>
 <body>
@@ -47,6 +46,5 @@
       <section class='view-frame' ng-View></section>
     </section>
   </section>
-  <script src='/lib/bootstrap.min.js'></script>
 </body>
 </html>

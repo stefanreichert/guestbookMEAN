@@ -2,7 +2,7 @@
   "name": "guestbookMEAN",
   "description": "A guestbook built on the MEAN stack",
   "author": "Stefan <stefan@wickedshell.net>",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
