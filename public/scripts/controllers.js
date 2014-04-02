@@ -1,3 +1,5 @@
+'use strict'
+
 var controllers = angular.module('controllers',['services', 'ui.bootstrap']);
 
 controllers.controller('newDedicationController', ['$scope', 'guestbookService', function ($scope, guestbookService){
@@ -9,7 +11,7 @@ controllers.controller('guestbookController', ['$scope', 'guestbookService', 'sp
     $scope.dateFormat = 'dd.MM.yyyy HH:mm';
     $scope.dedications = [];
 
-    $scope.addDedication = function (author, text) {
+    this.addDedication = function (author, text) {
         var valid = true;
         if (!author) {
             messageService.showWarning('cannot add dedication, author is missing!');
@@ -35,7 +37,7 @@ controllers.controller('guestbookController', ['$scope', 'guestbookService', 'sp
         }
     }
 
-    $scope.removeDedication = function (id) {
+    this.removeDedication = function (id) {
         if(id){
             spinnerService.startSpinning();
             guestbookService.removeDedication(id).
@@ -54,13 +56,18 @@ controllers.controller('guestbookController', ['$scope', 'guestbookService', 'sp
                     spinnerService.stopSpinning();
                 });
         }
+        else{
+            messageService.showError('cannot remove dedication, key is missing!');
+        }
     };
 
-    $scope.refresh = function () {
+    this.refresh = function () {
         spinnerService.startSpinning();
         guestbookService.loadAll().
             then(function(freshDedications){
-                $scope.dedications = freshDedications.splice(0);
+                if(freshDedications){
+                    $scope.dedications = freshDedications.splice(0);
+                }
             }).
             catch(function(err){
                 messageService.showError('Failed to load dedications', err);
@@ -70,5 +77,5 @@ controllers.controller('guestbookController', ['$scope', 'guestbookService', 'sp
             });
     }
 
-    $scope.refresh();
+    this.refresh();
 }]);

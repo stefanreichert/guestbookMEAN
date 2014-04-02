@@ -37,7 +37,7 @@ services.service('spinnerService', ['usSpinnerService', function (usSpinnerServi
     };
 }]);
 
-services.service('messageService', ['toaster', function (toaster) {
+services.service('messageService', ['toaster', '$log', function (toaster, $log) {
   var show = function(type, message){
     if(message){
       toaster.pop(type, message);
@@ -46,7 +46,7 @@ services.service('messageService', ['toaster', function (toaster) {
 
   this.showError = function (message, err){
     show('error', message);
-    console.log(err);
+    $log.log(err);
   };
 
   this.showSuccess = function (message){

@@ -1,6 +1,6 @@
 'use strict';
 
-describe('test suite', function() {
+describe('services', function() {
 
 	beforeEach(function (){
 		module('services');
@@ -9,145 +9,190 @@ describe('test suite', function() {
 	var noError = 'this error should not be there, dude!';
 	var thrownError = 'just for the fun of it';
 
-	describe('guestbook service', function(){
+	describe('guestbookService', function(){
 		
-		var addDedicationResultMock;
-		var removeDedicationResultMock;
-		var loadAllDedicationResultMock;
-		var failedResultMock;
+		// the test result mocks
+		var addDedicationResourceMock;
+		var removeDedicationResourceMock;
+		var loadAllDedicationResourceMock;
+		var failedResourceMock;
 
-		beforeEach(inject(function ($q){
-			addDedicationResultMock = {
-				$promise: $q.when({author:'Stefan', text:'A mock dedication'})
+		// the service
+		var _guestbookService;
+
+		// the resource
+		var _Dedication
+
+		beforeEach(inject(function ($q, guestbookService, Dedication){
+			var testDedication = {_id: 'mockID', author:'Stefan', text:'A mock dedication'};
+			// set the services and resources
+			_guestbookService = guestbookService;
+			_Dedication = Dedication;
+			// setup the resource result mocks for the different resource calls
+			addDedicationResourceMock = {
+				$promise: $q.when(testDedication)
 			}
-			removeDedicationResultMock = {
-				$promise: $q.when('mockID')
+			removeDedicationResourceMock = {
+				$promise: $q.when(testDedication._id)
 			}
-			loadAllDedicationResultMock = {
-				$promise: $q.when([{author:'Stefan', text:'A mock dedication'}])
+			loadAllDedicationResourceMock = {
+				$promise: $q.when([testDedication])
 			}
-			failedResultMock = {
+			failedResourceMock = {
 				$promise: $q.reject(thrownError)
 			}
 		}));
 
-		it('should call "save" on the resource when adding a new dedication', inject(function (guestbookService, Dedication) {
-			expect(guestbookService, 'addDedication').toBeDefined();
-			spyOn(Dedication, 'save').andReturn(addDedicationResultMock);
-			guestbookService.addDedication('an author', 'a text');
-			expect(Dedication.save).toHaveBeenCalled();
+		it('should save the resource when adding a new dedication', inject(function ($rootScope) {
+			// setup spy
+			spyOn(_Dedication, 'save').andReturn(addDedicationResourceMock);
+			// call method under test
+			_guestbookService.addDedication('an author', 'a text');
+			$rootScope.$apply(); // force the then function to be executed
+			// check method calls
+			expect(_Dedication.save).toHaveBeenCalled();
 		}));
 
-		it('should fail if "save" fails on the resource', inject(function (guestbookService, Dedication, $rootScope) {
-			expect(guestbookService, 'addDedication').toBeDefined();
-			spyOn(Dedication, 'save').andReturn(failedResultMock);
+		it('should fail if saving the resource fails', inject(function ($rootScope) {
+			// setup spy
+			spyOn(_Dedication, 'save').andReturn(failedResourceMock);
+			// call method under test
 			var error = noError;
-			guestbookService.addDedication('an author', 'a text').catch(function (err){
+			_guestbookService.addDedication('an author', 'a text').catch(function (err){
 				error = err;
 			});
-			expect(Dedication.save).toHaveBeenCalled();
-			$rootScope.$apply();
+			$rootScope.$apply(); // force the catch function to be executed
+			// check method calls and result
+			expect(_Dedication.save).toHaveBeenCalled();
 			expect(error).toBe(thrownError);
 		}));
 
-		it('should call "remove" on the resource when removing an existing dedication', inject(function (guestbookService, Dedication) {
-			expect(guestbookService, 'removeDedication').toBeDefined();
-			spyOn(Dedication, 'remove').andReturn(removeDedicationResultMock);
-			guestbookService.removeDedication('mockID');
-			expect(Dedication.remove).toHaveBeenCalled();
+		it('should remove the resource when removing an existing Dedication', inject(function ($rootScope) {
+			// setup spy
+			spyOn(_Dedication, 'remove').andReturn(removeDedicationResourceMock);
+			// call method under test
+			_guestbookService.removeDedication('mockID');
+			$rootScope.$apply(); // force the then function to be executed
+			// check method calls
+			expect(_Dedication.remove).toHaveBeenCalled();
 		}));
 
-		it('should fail if "remove" fails on the resource', inject(function (guestbookService, Dedication, $rootScope) {
-			expect(guestbookService, 'removeDedication').toBeDefined();
-			spyOn(Dedication, 'remove').andReturn(failedResultMock);
+		it('should fail removing the resource fails', inject(function ($rootScope) {
+			// setup spy
+			spyOn(_Dedication, 'remove').andReturn(failedResourceMock);
+			// call method under test
 			var error = noError;
-			guestbookService.removeDedication('mockID').catch(function (err){
+			_guestbookService.removeDedication('mockID').catch(function (err){
 				error = err;
 			});
-			expect(Dedication.remove).toHaveBeenCalled();
-			$rootScope.$apply();
+			$rootScope.$apply(); // force the catch function to be executed
+			// check method calls and result
+			expect(_Dedication.remove).toHaveBeenCalled();
 			expect(error).toBe(thrownError);
 		}));
 
-		it('should call "query" on the resource when loading all dedications', inject(function (guestbookService, Dedication, $rootScope){
-			expect(guestbookService, 'loadAll').toBeDefined();
-			spyOn(Dedication, 'query').andReturn(loadAllDedicationResultMock);
+		it('should query the resource when loading all dedications', inject(function ($rootScope){
+			// setup spy
+			spyOn(_Dedication, 'query').andReturn(loadAllDedicationResourceMock);
+			// call method under test
 			var loadedDedications;
-			guestbookService.loadAll().then(function (dedications) {
+			_guestbookService.loadAll().then(function (dedications) {
 				loadedDedications = dedications;
 			});
-			expect(Dedication.query).toHaveBeenCalled();
-			$rootScope.$apply();
+			$rootScope.$apply(); // force the then function to be executed
+			// check method calls and result
+			expect(_Dedication.query).toHaveBeenCalled();
 			expect(loadedDedications.length).toBe(1);
 		}));
 
-		it('should fail if "query" fails on the resource', inject(function (guestbookService, Dedication, $rootScope){
-			expect(guestbookService, 'loadAll').toBeDefined();
-			spyOn(Dedication, 'query').andReturn(failedResultMock);
+		it('should fail if querying the resource fails', inject(function ($rootScope){
+			// setup spy
+			spyOn(_Dedication, 'query').andReturn(failedResourceMock);
+			// call method under test
 			var error = noError;
-			guestbookService.loadAll().catch(function (err){
+			_guestbookService.loadAll().catch(function (err){
 				error = err;
 			});
-			expect(Dedication.query).toHaveBeenCalled();
-			$rootScope.$apply();
+			$rootScope.$apply(); // force the catch function to be executed
+			// check method calls and result
+			expect(_Dedication.query).toHaveBeenCalled();
 			expect(error).toBe(thrownError);
 			
 		}));
 	});
 
-	describe('message service', function() {
-		it('should define a pop method', inject(function (toaster){
-			expect(toaster, 'pop').toBeDefined();
+	describe('messageService', function() {
+
+		var _messageService;
+		var _toaster;
+
+		beforeEach(inject(function (toaster, messageService){
+			_messageService = messageService;
+			_toaster = toaster;
 		}));
 
-		it('should pop up an error message', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showError(thrownError);
-			expect(toaster.pop).toHaveBeenCalledWith('error', thrownError);
-		}));
+		it('should define a pop method', function (){
+			expect(_toaster, 'pop').toBeDefined();
+		});
 
-		it('should not pop up an error message in case of an empty text', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showError(null);
-			expect(toaster.pop).not.toHaveBeenCalled();
-		}));
+		it('should pop up an error message', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showError(thrownError);
+			expect(_toaster.pop).toHaveBeenCalledWith('error', thrownError);
+		});
 
-		it('should pop up a success message', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showSuccess(thrownError);
-			expect(toaster.pop).toHaveBeenCalledWith('success', thrownError);
-		}));
+		it('should not pop up an error message in case of an empty text', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showError(null);
+			expect(_toaster.pop).not.toHaveBeenCalled();
+		});
 
-		it('should not pop up a success message in case of an empty text', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showSuccess(null);
-			expect(toaster.pop).not.toHaveBeenCalled();
-		}));
+		it('should pop up a success message', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showSuccess(thrownError);
+			expect(_toaster.pop).toHaveBeenCalledWith('success', thrownError);
+		});
+
+		it('should not pop up a success message in case of an empty text', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showSuccess(null);
+			expect(_toaster.pop).not.toHaveBeenCalled();
+		});
 
 
-		it('should pop up a warning message', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showWarning(thrownError);
-			expect(toaster.pop).toHaveBeenCalledWith('warning', thrownError);
-		}));
+		it('should pop up a warning message', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showWarning(thrownError);
+			expect(_toaster.pop).toHaveBeenCalledWith('warning', thrownError);
+		});
 
-		it('should not pop up a warning message in case of an empty text', inject(function (toaster, messageService){
-			spyOn(toaster, 'pop');
-			messageService.showWarning(null);
-			expect(toaster.pop).not.toHaveBeenCalled();
-		}));
+		it('should not pop up a warning message in case of an empty text', function (){
+			spyOn(_toaster, 'pop');
+			_messageService.showWarning(null);
+			expect(_toaster.pop).not.toHaveBeenCalled();
+		});
 	});
 
-	describe('spinner service', function() {
-		it('should start spinning', inject(function (usSpinnerService, spinnerService){
-			spyOn(usSpinnerService, 'spin');
-			spinnerService.startSpinning();
-			expect(usSpinnerService.spin).toHaveBeenCalledWith('spinner');
+	describe('spinnerService', function() {
+
+		var _usSpinnerService;
+		var _spinnerService;
+
+		beforeEach(inject(function (usSpinnerService, spinnerService){
+			_usSpinnerService = usSpinnerService;
+			_spinnerService = spinnerService;
 		}));
-		it('should stop spinning', inject(function (usSpinnerService, spinnerService){
-			spyOn(usSpinnerService, 'stop');
-			spinnerService.stopSpinning();
-			expect(usSpinnerService.stop).toHaveBeenCalledWith('spinner');
-		}));
+
+		it('should start spinning', function (){
+			spyOn(_usSpinnerService, 'spin');
+			_spinnerService.startSpinning();
+			expect(_usSpinnerService.spin).toHaveBeenCalledWith('spinner');
+		});
+		
+		it('should stop spinning', function (){
+			spyOn(_usSpinnerService, 'stop');
+			_spinnerService.stopSpinning();
+			expect(_usSpinnerService.stop).toHaveBeenCalledWith('spinner');
+		});
 	});
 });

@@ -1,3 +1,5 @@
+'use strict'
+
 var resources = angular.module('resources', ['ngResource']);
 
 resources.factory('Dedication', ['$resource', function ($resource){
