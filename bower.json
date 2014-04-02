@@ -6,20 +6,14 @@
   "authors": [
     "Stefan <stefan@wickedshell.net>"
   ],
-  "license": "MIT",
+  "license": "EPL",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "AngularJS-Toaster": "~0.4.5",
     "angular-animate": "~1.2.15",
     "angular-resource": "~1.2.15",
     "angular-route": "~1.2.15",
+    "angular-mocks": "~1.2.15",
     "angular-spinner": "~0.4.0",
     "bootstrap": "~3.1.1",
     "ui-bootstrap": "~0.10.0"

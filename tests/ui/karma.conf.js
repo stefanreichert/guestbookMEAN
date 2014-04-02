@@ -3,13 +3,11 @@ module.exports = function(config){
     basePath : '../..',
 
     files : [
-      'public/lib/angular.js',
-      'public/lib/angular-*.js',
-      'public/lib/spin.js',
-      'public/lib/toaster.js',
-      'public/lib/ui-bootstrap*.js',
+      'public/bower_components/*/angular.js',
+      'public/bower_components/*/angular-*.js',
+      'public/bower_components/*/spin.js',
+      'public/bower_components/*/toaster.js',
       'public/scripts/*.js',
-      'tests/lib/*.js',
       'tests/ui/*.js'
     ],
 
