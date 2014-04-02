@@ -1,3 +1,5 @@
+'use strict'
+
 var services = angular.module('services', ['resources', 'angularSpinner', 'toaster']);
 
 services.service('guestbookService', ['Dedication', function (Dedication) {

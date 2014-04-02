@@ -1,3 +1,5 @@
+'use strict'
+
 var guestbookApp = angular.module('guestbookApp', ['controllers', 'ngRoute']);
 
 guestbookApp.config(['$routeProvider',
