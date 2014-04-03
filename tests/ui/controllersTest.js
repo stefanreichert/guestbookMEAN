@@ -16,8 +16,7 @@ describe('controllers', function(){
 		module('controllers');
 	});
 	
-	beforeEach(inject(function ($rootScope, $q, messageService, spinnerService) {
-		testScope = $rootScope.$new();
+	beforeEach(inject(function ($q, messageService, spinnerService) {
 		_spinnerService = spinnerService;
 		_messageService = messageService;
 		spyOn(_messageService, 'showWarning');
@@ -26,6 +25,12 @@ describe('controllers', function(){
 		spyOn(_spinnerService, 'startSpinning');
 		spyOn(_spinnerService, 'stopSpinning');
 	}));
+
+	var checkNoMessage = function (count){
+		expect(_messageService.showSuccess).not.toHaveBeenCalled();
+		expect(_messageService.showError).not.toHaveBeenCalled();
+		expect(_messageService.showWarning).not.toHaveBeenCalled();
+	}
 
 	var checkWarning = function (count){
 		expect(_messageService.showSuccess).not.toHaveBeenCalled();
@@ -55,6 +60,18 @@ describe('controllers', function(){
 		expect(_spinnerService.stopSpinning).not.toHaveBeenCalled();
 	}
 
+	describe('newDedicationController', function(){
+		it('should exist to existing fields', inject(function ($rootScope, $controller){
+			// reset scope
+			testScope = $rootScope.$new();
+			// init controller
+			$controller('newDedicationController', {$scope: testScope});
+			// check scope
+			expect(testScope.newAuthor).toEqual('');
+			expect(testScope.newText).toEqual('');
+		}));
+	});
+
 	describe('guestbookController', function(){
 		// test artifact
 		var testDedication;
@@ -63,26 +80,30 @@ describe('controllers', function(){
 		var testAddResultMock;
 		var testRemoveResultMock;
 		var testLoadAllResultMock;
+		var nullResultMock;
 		var failedResultMock;
 
 		// service
 		var _guestbookService;
 			
-		beforeEach(inject(function ($q, guestbookService){
+		beforeEach(inject(function ($rootScope, $q, guestbookService){
 			// set fields
 			_guestbookService = guestbookService;
 			testDedication = {_id:'test', author:'Stefan', text:'a test dedication', date: new Date()};
 			testAddResultMock = $q.when(testDedication);
 			testLoadAllResultMock = $q.when([testDedication]);
 			testRemoveResultMock = $q.when(testDedication._id);
+			nullResultMock = $q.when(null);
 			failedResultMock = $q.reject(error);
 		}));
 
-		describe('withLoadSucceeding', function(){
+		describe('properly initialized', function(){
 			
 			var _guestbookController;
 
 			beforeEach(inject(function ($rootScope, $controller){
+				// reset scope
+				testScope = $rootScope.$new();
 				// setup spy
 				spyOn(_guestbookService, 'loadAll').andReturn(testLoadAllResultMock);
 				// init controller
@@ -185,9 +206,11 @@ describe('controllers', function(){
 			}));
 		});
 
-		describe('withLoadFailing', function(){
+		describe('with service initially failing to load', function(){
 
-			it('should show an error on service failure when refreshing', inject(function ($rootScope, $controller){
+			it('should show an error when refreshing', inject(function ($rootScope, $controller){
+				// reset scope
+				testScope = $rootScope.$new();
 				// setup spy
 				spyOn(_guestbookService, 'loadAll').andReturn(failedResultMock);
 				// init controller
@@ -199,6 +222,25 @@ describe('controllers', function(){
 				expect(_guestbookService.loadAll.callCount).toBe(1);
 				checkSpinning();
 				checkError();
+			}));
+		});
+
+		describe('with service initially returning null', function(){
+
+			it('should do nothing when refreshing', inject(function ($rootScope, $controller){
+				// reset scope
+				testScope = $rootScope.$new();
+				// setup spy
+				spyOn(_guestbookService, 'loadAll').andReturn(nullResultMock);
+				// init controller
+				$controller('guestbookController', {$scope: testScope});
+				$rootScope.$apply(); // async init!
+				// check state of the scope
+				expect(testScope.dedications.length).toBe(0);
+				// check service calls, refresh() was called on creation
+				expect(_guestbookService.loadAll.callCount).toBe(1);
+				checkSpinning();
+				checkNoMessage();
 			}));
 		});
 	});
