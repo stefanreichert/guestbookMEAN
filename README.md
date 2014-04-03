@@ -10,7 +10,7 @@ __N__ odeJS
 ##setup
 ###node
 After downloading the project you need to setup the required dependencies. The setup is based on [npm](https://www.npmjs.org/) for the backend- and [bower](https://github.com/bower/bower) for the frontend dependencies. As bower itself is a node package, you need to install [node](http://nodejs.org/) (respectively npm) first. Please refer to this projects _package.json_ file for the required node version.  
-After installing node, you should be abled to call ``npm help`` help in a shell. It should list all options available for npm.  
+After installing node, you should be abled to call ``npm help`` in a shell. It should list all options available for npm.  
 ###bower
 OK, now it's time to install bower by typing ``npm -g install bower``. The ``-g`` results in installing bower _globally_. The package will be put to your personal folder instead of the node installation folder. If you prefer installing it _locally_ to your node installation folder, switch to _\{NODE_HOME\}/node_modules_ and type ``npm install bower``.  Make sure though, that the _\{NODE_HOME\}/node_modules.bin_ folder is on the path. Check it by typing ``bower --version`` in a shell. It should present the bower version installed.
 ### mongoDB
