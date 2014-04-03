@@ -5,8 +5,11 @@
   "version": "0.9.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "test_ui": "karma start tests/ui/karma.conf.js"
+    "db_setup" : "mkdir mongoDB",
+    "db" : "mongod --dbpath ./mongoDB --rest",
+    "server": "node app.js",
+    "guestbook": "start http://localhost:3000/guestbook.html",
+    "ui_test": "karma start tests/ui/karma.conf.js"
   },
   "dependencies": {
     "express": "3.4.x",

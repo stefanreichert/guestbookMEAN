@@ -1,4 +1,5 @@
-node_modules
-result
-coverage
-bower_components
+/node_modules
+/tests/ui/result
+/tests/ui/coverage
+/public/bower_components
+/mongoDB
