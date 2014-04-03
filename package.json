@@ -7,7 +7,7 @@
   "scripts": {
     "db_setup" : "mkdir mongoDB",
     "db" : "mongod --dbpath ./mongoDB --rest",
-    "server": "node app.js",
+    "server": "node app/app.js",
     "guestbook": "start http://localhost:3000/guestbook.html",
     "ui_test": "karma start tests/ui/karma.conf.js"
   },

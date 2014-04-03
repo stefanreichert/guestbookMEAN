@@ -3,16 +3,16 @@ module.exports = function(config){
     basePath : '../..',
 
     files : [
-      'public/bower_components/*/angular.js',
-      'public/bower_components/*/angular-*.js',
-      'public/bower_components/*/spin.js',
-      'public/bower_components/*/toaster.js',
-      'public/scripts/*.js',
+      'app/public/bower_components/*/angular.js',
+      'app/public/bower_components/*/angular-*.js',
+      'app/public/bower_components/*/spin.js',
+      'app/public/bower_components/*/toaster.js',
+      'app/public/scripts/*.js',
       'tests/ui/*.js'
     ],
 
     preprocessors : {
-      'public/scripts/*.js': ['coverage']
+      'app/public/scripts/*.js': ['coverage']
     },
 
     reporters: ['progress', 'coverage', 'junit'],

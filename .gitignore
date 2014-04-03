@@ -1,5 +1,5 @@
 /node_modules
 /tests/ui/result
 /tests/ui/coverage
-/public/bower_components
+/app/public/bower_components
 /mongoDB
