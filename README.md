@@ -8,7 +8,7 @@ __A__ ngularJS
 __N__ odeJS  
 
 ##setup
-###node/npmbower
+###node
 After downloading the project you need to setup the required dependencies. The setup is based on [npm](https://www.npmjs.org/) for the backend- and [bower](https://github.com/bower/bower) for the frontend dependencies. As bower itself is a node package, you need to install [node](http://nodejs.org/) (respectively npm) first. Please refer to this projects _package.json_ file for the required node version.  
 After installing node, you should be abled to call ``npm help`` help in a shell. It should list all options available for npm.  
 ###bower
