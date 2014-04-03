@@ -28,4 +28,4 @@ Here is the list of commands available for the guestbook showcase.
 +  ``npm run db`` launches the mongoDB (blocking call)
 +  ``npm run server`` will launch the guestbook HTTP server on port 3000 (blocking call)
 +  ``npm run guestbook`` will open the guestbook web page in the browser (will only work on windows machines, sorry for that...)
-+  ``npm run ui_test`` runs the [jasmine](http://jasmine.github.io/) tests with [karma](http://karma-runner.github.io/0.12/index.html) (blocking call)
++  ``npm run ui_tests`` runs the [jasmine](http://jasmine.github.io/) tests with [karma](http://karma-runner.github.io/0.12/index.html) (blocking call)
