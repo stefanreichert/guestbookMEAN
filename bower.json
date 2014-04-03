@@ -1,13 +1,13 @@
 {
   "name": "guestbookMEAN",
-  "version": "0.9.0",
-  "homepage": "https://github.com/stefanreichert/guestbookMEAN",
   "description": "A guestbook UI built on the MEAN stack",
+  "version": "0.9.0",
   "authors": [
     "Stefan <stefan@wickedshell.net>"
   ],
-  "license": "EPL",
   "private": true,
+  "license": "EPL",
+  "homepage": "https://github.com/stefanreichert/guestbookMEAN",
   "dependencies": {
     "AngularJS-Toaster": "~0.4.5",
     "angular-animate": "~1.2.15",

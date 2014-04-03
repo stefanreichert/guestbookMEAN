@@ -24,8 +24,8 @@ That's it...
 You are now abled to run the guestbook application. npm supports defining commands for custom scripts pretty well. These commands are configured in the _package.json_ file.  
 Here is the list of commands available for the guestbook showcase.
 
-+  ``npm run db_setup`` creates a subfolder _mongoDB_ which hosts the data/configuration of mongoDB. This only has to be called once.
++  ``npm run db_setup`` creates a subfolder _mongoDB_ which hosts the data/configuration of mongoDB. This only has to be called once. (windows only, sorry for that...)
 +  ``npm run db`` launches the mongoDB (blocking call)
 +  ``npm run server`` will launch the guestbook HTTP server on port 3000 (blocking call)
-+  ``npm run guestbook`` will open the guestbook web page in the browser (will only work on windows machines, sorry for that...)
++  ``npm run guestbook`` will open the guestbook web page in the browser (windows only, sorry for that...)
 +  ``npm run ui_tests`` runs the [jasmine](http://jasmine.github.io/) tests with [karma](http://karma-runner.github.io/0.12/index.html) (blocking call)

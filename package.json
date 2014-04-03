@@ -1,9 +1,10 @@
 {
   "name": "guestbookMEAN",
   "description": "A guestbook built on the MEAN stack",
-  "author": "Stefan <stefan@wickedshell.net>",
   "version": "0.9.0",
+  "author": "Stefan <stefan@wickedshell.net>",
   "private": true,
+  "license": "EPL",
   "scripts": {
     "db_setup" : "mkdir mongoDB",
     "db" : "mongod --dbpath ./mongoDB --rest",
