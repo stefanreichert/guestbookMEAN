@@ -18,7 +18,7 @@ The other thing to install is [mongoDB](https://www.mongodb.org/). Just download
 ###dependencies
 In order to successfully launch the guestbook showcase, you are required to download the dependencies now. Sounds an awful lot of work, but it isn't. You're just two shell commands away from glory.  
 First switch to the guestbook showcase root folder.
-``npm -g install`` will examine the _package.json_ file and install all backend dependencies to the _node_modules_ subfolder.
+``npm install`` will examine the _package.json_ file and install all backend dependencies to the _node_modules_ subfolder.
 ``bower install`` will install all frontend dependencies listed in the _bower.json_ file to the subfolder _public/bower_components_.
 That's it...
 ##launch

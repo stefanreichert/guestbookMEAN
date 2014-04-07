@@ -1,6 +1,6 @@
 module.exports = function(config){
   config.set({
-    basePath : '../..',
+    basePath : '..',
 
     files : [
       'app/public/bower_components/*/angular.js',
@@ -34,11 +34,11 @@ module.exports = function(config){
 
     coverageReporter : {
       type : 'html',
-      dir : 'tests/ui/coverage'
+      dir : 'test-ui/coverage'
     },
 
     junitReporter: {
-      outputFile: 'tests/ui/result/test-results.xml',
+      outputFile: 'test-ui/results/test-results.xml',
       suite: '[guestbook MEAN - Test Suite]'
     }
 

@@ -6,10 +6,13 @@
   "private": true,
   "license": "EPL",
   "scripts": {
-    "db_setup" : "mkdir mongoDB",
-    "db" : "mongod --dbpath ./mongoDB --rest",
+    "db_setup": "mkdir mongoDB",
+    "db": "mongod --dbpath ./mongoDB --rest",
     "server": "node app/app.js",
     "guestbook": "start http://localhost:3000/guestbook.html",
+    "tests_cleanup": "rmdir /S /Q app-cov & rmdir /S /Q test\\coverage & rmdir /S /Q test\\result",
+    "tests_init": "npm run tests_cleanup & jscoverage --exclude=public app app-cov & mkdir test\\coverage & mkdir test\\result",
+    "tests": "npm run tests_init & SET multi=html-cov=test/coverage/index.html xunit=test/result/test-result.xml & mocha",
     "ui_tests": "karma start tests/ui/karma.conf.js"
   },
   "dependencies": {
@@ -18,16 +21,21 @@
     "mongodb": "1.3.x",
     "promise": "4.0.x"
   },
-  "devDependencies":{
-    "karma": "0.12.1",
-    "karma-cli": "0.0.4",
-    "karma-chrome-launcher": "0.1.2",
-    "karma-firefox-launcher": "0.1.3",
-    "karma-jasmine": "0.1.5",
-    "karma-coverage": "0.2.1",
-    "karma-junit-reporter": "0.2.1",
-    "karma-script-launcher": "0.1.0",
-    "node-inspector": "0.7.1"
+  "devDependencies": {
+    "karma": "0.12.x",
+    "karma-cli": "0.0.x",
+    "karma-chrome-launcher": "0.1.x",
+    "karma-firefox-launcher": "0.1.x",
+    "karma-jasmine": "0.1.x",
+    "karma-coverage": "0.2.x",
+    "karma-junit-reporter": "0.2.x",
+    "karma-script-launcher": "0.1.x",
+    "node-inspector": "0.7.x",
+    "mocha": "1.15.x",
+    "sinon": "1.9.x",
+    "expectations": "0.2.x",
+    "jscoverage": "0.3.x",
+    "mocha-multi": "0.4.x"
   },
   "engine": "node >= 0.10.24"
 }

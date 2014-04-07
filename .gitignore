@@ -1,5 +1,9 @@
 /node_modules
-/tests/ui/result
-/tests/ui/coverage
+/test-ui/result
+/test-ui/coverage
+/test/result
+/test/coverage
 /app/public/bower_components
 /mongoDB
+/app-cov
+/*.log
