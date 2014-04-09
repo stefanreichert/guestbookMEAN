@@ -1,7 +1,7 @@
 /node_modules
-/test-ui/result
+/test-ui/results
 /test-ui/coverage
-/test/result
+/test/results
 /test/coverage
 /app/public/bower_components
 /mongoDB

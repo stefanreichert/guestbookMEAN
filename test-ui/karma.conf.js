@@ -8,7 +8,7 @@ module.exports = function(config){
       'app/public/bower_components/*/spin.js',
       'app/public/bower_components/*/toaster.js',
       'app/public/scripts/*.js',
-      'tests/ui/*.js'
+      'test-ui/*.js'
     ],
 
     preprocessors : {
