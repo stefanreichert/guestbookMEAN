@@ -30,8 +30,8 @@ Here is the list of commands available for the guestbook showcase.
 +  ``npm run server`` will launch the guestbook HTTP server on port 3000. (blocking call)
 +  ``npm run guestbook`` will open the guestbook web page in the browser (windows only, sorry for that...).
 +  ``npm run tests_cleanup`` performs a cleanup of all test related content such as instrumented code, results from prior tests or former coverage reports. 
-+  ``npm run tests`` runs the [mocha](http://visionmedia.github.io/mocha/) tests for the node application. It uses [chai](http://chaijs.com/) for the assert statements and [sinon](http://sinonjs.org/) for stubbing. The run will provide an [xunit](http://xunitjs.codeplex.com/) and a coverage report.
-+  ``npm run ui_tests`` runs the [jasmine](http://jasmine.github.io/) UI tests with [karma](http://karma-runner.github.io/0.12/index.html). The run will provide an [junit report](https://github.com/karma-runner/karma-junit-reporter) and a [coverage report](https://github.com/karma-runner/karma-coverage). (blocking call)
++  ``npm run tests`` runs the [mocha](http://visionmedia.github.io/mocha/) tests for the node application. It uses [chai](http://chaijs.com/) for the assert statements and [sinon](http://sinonjs.org/) for stubbing. The run will provide an [xunit](http://xunitjs.codeplex.com/) report and a [jscoverage coverage report](http://siliconforks.com/jscoverage).
++  ``npm run ui_tests`` runs the [jasmine](http://jasmine.github.io/) UI tests with [karma](http://karma-runner.github.io/0.12/index.html). The run will provide an [karma junit report](https://github.com/karma-runner/karma-junit-reporter) and a [karma coverage report](https://github.com/karma-runner/karma-coverage). (blocking call)
 
 ##overview
 As already mentioned, the guestbook showcase is a pretty simple application.
@@ -43,6 +43,3 @@ It provides a list of yet added dedications.
 When clicking _add dedication_, the lower part provides a form for details of a new dedication.  
 
 ![guestbook - new dedication](documentation/guestbook_newdedication.png "guestbook - new dedication")
-### coverage reports
-A test run of either ui or backendprovides a test coverage report.
-The [frontend test coverage report](documentation/test-ui/coverage.html) is created by the [karma junit reporter](https://github.com/karma-runner/karma-junit-reporter)). The [coverage report](documentation/test/coverage.html) for the backend part is based on [js coverage](http://siliconforks.com/jscoverage/) and a compliant mocha reporter.
