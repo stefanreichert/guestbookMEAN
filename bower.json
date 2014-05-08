@@ -1,6 +1,6 @@
 {
-  "name": "guestbookMEAN",
-  "description": "A guestbook UI built on the MEAN stack",
+  "name": "guestbookMEEN",
+  "description": "A guestbook UI built on the MEEN stack",
   "version": "0.9.0",
   "authors": [
     "Stefan <stefan@wickedshell.net>"
@@ -9,12 +9,8 @@
   "license": "EPL",
   "homepage": "https://github.com/stefanreichert/guestbookMEAN",
   "dependencies": {
-    "AngularJS-Toaster": "~0.4.5",
-    "angular-animate": "~1.2.15",
-    "angular-resource": "~1.2.15",
-    "angular-route": "~1.2.15",
-    "angular-mocks": "~1.2.15",
-    "angular-spinner": "~0.4.0",
+    "ember": "~1.5",
+    "ember-data": "~1.0.0-beta.4",
     "bootstrap": "~3.1.1",
     "ui-bootstrap": "~0.10.0"
   }

@@ -1,18 +1,15 @@
-'use strict'
+App = Ember.Application.create();
 
-var guestbookApp = angular.module('guestbookApp', ['controllers', 'ngRoute']);
+App.Router.map(function() {
+  this.resource('dedications', function(){
+  	this.route('new');	
+  });
+});
 
-guestbookApp.config(['$routeProvider',
-	function($routeProvider) {
-		$routeProvider.
-		when('/guestbook', {
-			templateUrl: 'partials/buttonBar.html'
-		}).
-		when('/guestbook/dedication', {
-			templateUrl: 'partials/dedicationNew.html',
-			controller: 'newDedicationController'
-		}).
-		otherwise({
-			redirectTo: '/guestbook'
-		});
-	}]);
+App.DedicationsRoute = Ember.Route.extend({
+  model: function() {
+    return dedications;
+  }
+});
+
+var dedications = [{author:'max', text: 'ember, are you there?', date: new Date()}]

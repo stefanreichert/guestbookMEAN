@@ -1,50 +1,58 @@
 <!doctype html>
-<html ng-app='guestbookApp'>
+<html>
 <head>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>guestbook MEAN</title>
-  <!-- libraries -->
-  <script src="/bower_components/jquery/dist/jquery.js"></script>
-  <script src="/bower_components/angular/angular.js"></script>
-  <script src="/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="/bower_components/angular-route/angular-route.js"></script>
-  <script src="/bower_components/angular-resource/angular-resource.js"></script>
-  <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
-  <script src="/bower_components/spin.js/spin.js"></script>
-  <script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
-  <script src="/bower_components/AngularJS-Toaster/toaster.js"></script>
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="/bower_components/AngularJS-Toaster/toaster.css" />
-  <!-- guestbook parts -->
-  <script src="/scripts/guestbook.js"></script>
-  <script src="/scripts/controllers.js"></script>
-  <script src="/scripts/services.js"></script>
-  <script src="/scripts/resources.js"></script>
-  <link rel="stylesheet" href="/stylesheets/guestbook.css" />
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<title>guestbook MEEN</title>
+	<!-- libraries -->
+	<script src="/bower_components/jquery/dist/jquery.js"></script>
+	<script src="/bower_components/handlebars/handlebars.js"></script>
+	<script src="/bower_components/ember/ember.js"></script>
+	<script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
+	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+	<!-- guestbook parts -->
+	<script src="/scripts/guestbook.js"></script>
 </head>
 <body>
-  <section class='container' ng-controller='guestbookController as guestbookController'>
-    <section class='row page-header'>
-        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
-    </section>
-    <section class='row'>
-        <toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
-    </section>
-    <section class='row panel panel-default' us-spinner spinner-key="spinner">
-      <section class="panel-heading">dedications</section>
-      <section class='panel-body'>
-        <section class='row' ng-repeat="dedication in dedications">
-          <div class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{dedication.date | date:dateFormat}}</em></div>
-          <div class='col-md-8'>{{dedication.text}}</div>
-          <div class='col-md-1'>
-            <button class='btn btn-default btn-xs' ng-click='guestbookController.removeDedication(dedication._id)'><span class="glyphicon glyphicon-trash"></span></button>
-          </div>
-        </section>
-      </section>
-    </section>
-    <section class='row view-container'>
-      <section class='view-frame' ng-View></section>
-    </section>
-  </section>
+	<section class='container'>
+	    <section class='row page-header'>
+	        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
+		</section>
+	</section>
+
+	<script type="text/x-handlebars">
+    	{{outlet}}
+	</script>
+	
+	<script type="text/x-handlebars" id="dedications">
+		<section class='container'>
+			<section class='row panel panel-default'>
+				<section class="panel-heading">dedications</section>
+				<section class='panel-body'>
+						{{#each dedication in model}}
+						<section class='row'>
+							<div class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{dedication.date}}</em></div>
+							<div class='col-md-8'>{{dedication.text}}</div>
+							<div class='col-md-1'>
+								<button class='btn btn-default btn-xs'><span class="glyphicon glyphicon-trash"></span></button>
+							</div>
+						</section>
+						{{/each}}
+				</section>
+			</section>
+		</section>
+		
+    	{{outlet}}
+	</script>
+
+	<script type="text/x-handlebars" id="dedications/new">
+		<section class='container'>
+			<section class='row view-container'>
+				<section class='panel btn-toolbar' role="toolbar">
+			  		<a class='btn btn-info' type="button" href='#/guestbook/dedication'>new dedication</a>
+			  		<button class='btn btn-info' ng-click='guestbookController.refresh()'>refresh</button>
+				</section>
+			</section>
+		</section>
+	</script>
 </body>
 </html>
