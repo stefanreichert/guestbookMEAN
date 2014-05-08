@@ -1,3 +1,5 @@
+'use strict'
+
 var dedicationDAO = require('../daos/dedicationDAO')
 
 exports.create = function(req, res){

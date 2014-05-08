@@ -1,3 +1,5 @@
+'use strict'
+
 exports.newInstance =
     function(author, text){
         return {

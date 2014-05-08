@@ -1,7 +1,4 @@
-
-/**
- * Module dependencies.
- */
+'use strict'
 
 var express = require('express');
 var restDedicationRoutes = require('./routes/dedicationRoutes');
