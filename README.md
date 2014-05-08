@@ -1,10 +1,10 @@
 #guestbook - MEAN
 
-This simple guestbook is a showcase for an single page application (SPA) using the MEAN stack.
+This simple guestbook is a showcase for an single page application (SPA) using the MEEN stack.
 
 __M__ ongoDB  
 __E__ xpress Framework  
-__A__ ngularJS  
+__E__ mberJS  
 __N__ odeJS  
 
 ##setup
