@@ -7,30 +7,27 @@
 	<script src="/bower_components/jquery/dist/jquery.js"></script>
 	<script src="/bower_components/handlebars/handlebars.js"></script>
 	<script src="/bower_components/ember/ember.js"></script>
+	<script src="/bower_components/ember-data/ember-data.js"></script>
+	<script src="/bower_components/momentjs/moment.js"></script>
 	<script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
 	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
 	<!-- guestbook parts -->
-	<script src="/scripts/guestbook.js"></script>
+	<script src="/scripts/application.js"></script>
+	<script src="/scripts/data.js"></script>
+	<script src="/scripts/helper.js"></script>
 </head>
 <body>
-	<section class='container'>
-	    <section class='row page-header'>
-	        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
-		</section>
-	</section>
-
 	<script type="text/x-handlebars">
-    	{{outlet}}
-	</script>
-	
-	<script type="text/x-handlebars" id="dedications">
 		<section class='container'>
+		    <section class='row page-header'>
+		        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
+			</section>
 			<section class='row panel panel-default'>
 				<section class="panel-heading">dedications</section>
 				<section class='panel-body'>
-						{{#each dedication in model}}
+						{{#each dedication in controller}}
 						<section class='row'>
-							<div class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{dedication.date}}</em></div>
+							<div class='col-md-3'><em>{{dedication.author}}&nbsp;{{format-date dedication.date}}</em></div>
 							<div class='col-md-8'>{{dedication.text}}</div>
 							<div class='col-md-1'>
 								<button class='btn btn-default btn-xs'><span class="glyphicon glyphicon-trash"></span></button>
@@ -44,12 +41,38 @@
     	{{outlet}}
 	</script>
 
-	<script type="text/x-handlebars" id="dedications/new">
+	<script type="text/x-handlebars" id="main">
 		<section class='container'>
 			<section class='row view-container'>
 				<section class='panel btn-toolbar' role="toolbar">
-			  		<a class='btn btn-info' type="button" href='#/guestbook/dedication'>new dedication</a>
-			  		<button class='btn btn-info' ng-click='guestbookController.refresh()'>refresh</button>
+					{{link-to 'new dedication' 'new' type="button" class="btn btn-info"}}
+			  		<button class='btn btn-info' {{action refresh}}>refresh</button>
+				</section>
+			</section>
+		</section>
+	</script>
+
+	<script type="text/x-handlebars" id="new">
+		<section class='container'>
+			<section class='row view-container'>
+				<p class='text'>please leave your dedication.</p>
+				<form name="dedicationForm" class='form-horizontal' role='form'>
+				  <section class='form-group'>
+				    <label class='col-sm-1 control-label' for='name'>your&nbsp;name*</label>
+				    <section class='col-sm-11'>
+				      <input class='form-control' name="author" placeholder='your name' ng-model='newAuthor' required>
+				    </section>
+				  </section>
+				  <section class='form-group'>
+				    <label class='col-sm-1 control-label' for='dedication'>dedication*</label>
+				    <section class='col-sm-11'>
+				      <input class='form-control' name="text" placeholder='your dedication' ng-model='newText' required>
+				    </section>
+				  </section>
+				</form>
+				<section class='panel btn-toolbar' role='toolbar'>
+				  <button class='btn btn-info' {{action 'addDedication(null, null)'}}>add dedication</button>
+				  {{link-to 'cancel' 'main' type="button" class="btn btn-info"}}
 				</section>
 			</section>
 		</section>

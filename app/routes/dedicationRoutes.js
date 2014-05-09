@@ -10,7 +10,7 @@ exports.create = function(req, res){
   else{
     dedicationDAO.create(req.body.author.trim(), req.body.text.trim()).
       then(function (dedication){
-        res.json(dedication);
+        res.json({dedication: dedication});
       }).
       catch(function(err){
           console.info(err);
@@ -23,7 +23,7 @@ exports.create = function(req, res){
 exports.all = function(req,res){
   dedicationDAO.loadAll().
     then(function (dedications){
-      res.json(dedications);
+      res.json({dedication: dedications});
     }).
     catch(function(err){
       console.info(err);

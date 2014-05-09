@@ -30,9 +30,9 @@ if ('development' == app.get('env')) {
 }
 
 // REST routes
-app.get('/dedication', restDedicationRoutes.all);
-app.post('/dedication', restDedicationRoutes.create);
-app.delete('/dedication/:id', restDedicationRoutes.remove);
+app.get('/dedications', restDedicationRoutes.all);
+app.post('/dedications', restDedicationRoutes.create);
+app.delete('/dedications/:id', restDedicationRoutes.remove);
 
 var startServer = function (){
   return new Promise(function (resolve, reject){
