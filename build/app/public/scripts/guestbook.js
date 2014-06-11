@@ -1,0 +1,2 @@
+/*! guestbookMEAN 2014-06-10 */
+"use strict";var guestbookApp=angular.module("guestbookApp",["controllers","ngRoute","kendo.directives"]);guestbookApp.config(["$routeProvider",function(a){a.when("/guestbook",{templateUrl:"partials/buttonBar.html"}).when("/guestbook/dedication",{templateUrl:"partials/dedicationNew.html",controller:"newDedicationController"}).otherwise({redirectTo:"/guestbook"})}]);

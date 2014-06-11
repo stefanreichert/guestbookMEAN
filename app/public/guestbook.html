@@ -1,20 +1,23 @@
 <!doctype html>
-<html ng-app='guestbookApp'>
+<html ng-app='guestbookApp' ng-strict-di>
 <head>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>guestbook MEAN</title>
-  <!-- libraries -->
-  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <!-- libraries (3rd party) -->
+  <script src="/bower_components/jquery/jquery.js"></script>
+  <script src="/bower_components/kendo-ui/js/kendo.ui.core.min.js"></script>
+  <script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <script src="/bower_components/spin.js/spin.js"></script>
+  <!-- libraries (angular) -->
   <script src="/bower_components/angular/angular.js"></script>
   <script src="/bower_components/angular-animate/angular-animate.js"></script>
   <script src="/bower_components/angular-route/angular-route.js"></script>
   <script src="/bower_components/angular-resource/angular-resource.js"></script>
   <script src="/bower_components/angular-spinner/angular-spinner.js"></script>
-  <script src="/bower_components/spin.js/spin.js"></script>
-  <script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
-  <script src="/bower_components/AngularJS-Toaster/toaster.js"></script>
+  <script src="/bower_components/angular-kendo/angular-kendo.js"></script>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-  <link rel="stylesheet" href="/bower_components/AngularJS-Toaster/toaster.css" />
+  <link rel="stylesheet" href="/bower_components/kendo-ui/styles/web/kendo.common.core.min.css" />
+  <link rel="stylesheet" href="/bower_components/kendo-ui/styles/web/kendo.bootstrap.min.css" />
   <!-- guestbook parts -->
   <script src="/scripts/guestbook.js"></script>
   <script src="/scripts/controllers.js"></script>
@@ -23,22 +26,24 @@
   <link rel="stylesheet" href="/stylesheets/guestbook.css" />
 </head>
 <body>
+  <section class='container' style='position: absolute;width: 100%; margin: 20px 0 20px;' ng-controller='notificationsController as notificationsController'>
+  	  <section id='notificationContainer' style="overflow: hidden; width: 200px; float:right;">
+	    <span kendo-notification='notifications' k-append-to="'#notificationContainer'"></span>
+      </section>
+  </section>
   <section class='container' ng-controller='guestbookController as guestbookController'>
     <section class='row page-header'>
-        <h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
+		<h1>guestbook&nbsp;<small>welcome to the guestbook application</small></h1>
     </section>
-    <section class='row'>
-        <toaster-container toaster-options="{'position-class': 'toast-top-right'}"></toaster-container>
-    </section>
-    <section class='row panel panel-default' us-spinner spinner-key="spinner">
-      <section class="panel-heading">dedications</section>
+    <section class='row panel panel-default' us-spinner spinner-key='spinner'>
+      <section class='panel-heading'>dedications</section>
       <section class='panel-body'>
-        <section class='row' ng-repeat="dedication in dedications">
-          <div class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{dedication.date | date:dateFormat}}</em></div>
-          <div class='col-md-8'>{{dedication.text}}</div>
-          <div class='col-md-1'>
-            <button class='btn btn-default btn-xs' ng-click='guestbookController.removeDedication(dedication._id)'><span class="glyphicon glyphicon-trash"></span></button>
-          </div>
+        <section class='row' ng-repeat='dedication in dedications'>
+          <section class='col-md-3'><em>{{dedication.author}}&nbsp;on&nbsp;{{dedication.date | date:dateFormat}}</em></section>
+          <section class='col-md-8'>{{dedication.text}}</section>
+          <section class='col-md-1'>
+            <button class='btn btn-default btn-xs' ng-click='guestbookController.removeDedication(dedication._id)'><span class='glyphicon glyphicon-trash'></span></button>
+          </section>
         </section>
       </section>
     </section>

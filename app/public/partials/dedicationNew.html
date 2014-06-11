@@ -1,9 +1,9 @@
 <p class='text'>please leave your dedication.</p>
-<form name="dedicationForm" class='form-horizontal' role='form'>
+<form name="dedicationForm" class='form-horizontal' role='form' ng-controller='newDedicationController as newDedicationController'>
   <section class='form-group'>
     <label class='col-sm-1 control-label' for='name'>your&nbsp;name*</label>
     <section class='col-sm-11'>
-      <input class='form-control' name="author" placeholder='your name' ng-model='newAuthor' required>
+      <input class='form-control' style="width: 100%;" name="author" placeholder='your name' ng-model='newAuthor' kendo-auto-complete k-data-source="authors" required>
     </section>
   </section>
   <section class='form-group'>
@@ -12,8 +12,8 @@
       <input class='form-control' name="text" placeholder='your dedication' ng-model='newText' required>
     </section>
   </section>
+  <section class='panel btn-toolbar' role='toolbar'>
+    <button class='btn btn-info' ng-click='guestbookController.addDedication(newAuthor, newText)'>add dedication</button>
+    <a class='btn btn-info' type="button" href='#/guestbook'>cancel</a>
+  </section>
 </form>
-<section class='panel btn-toolbar' role='toolbar'>
-  <button class='btn btn-info' ng-click='guestbookController.addDedication(newAuthor, newText)'>add dedication</button>
-  <a class='btn btn-info' type="button" href='#/guestbook'>cancel</a>
-</section>

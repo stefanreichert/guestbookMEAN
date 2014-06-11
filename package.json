@@ -9,11 +9,7 @@
     "db_setup": "mkdir mongoDB",
     "db": "mongod --dbpath ./mongoDB --rest",
     "server": "node app/app.js",
-    "guestbook": "start http://localhost:3000/guestbook.html",
-    "tests_cleanup": "rmdir /S /Q app-cov & rmdir /S /Q test\\coverage & rmdir /S /Q test\\results",
-    "tests_init": "npm run tests_cleanup & jscoverage --exclude=public app app-cov & mkdir test\\coverage & mkdir test\\results",
-    "tests": "npm run tests_init & SET multi=html-cov=test/coverage/index.html xunit=test/results/test-result.xml & mocha",
-    "ui_tests": "karma start test-ui/karma.conf.js"
+    "guestbook": "start http://localhost:3000/guestbook.html"
   },
   "dependencies": {
     "express": "3.4.x",
@@ -31,13 +27,29 @@
     "karma-junit-reporter": "0.2.x",
     "karma-script-launcher": "0.1.x",
     "node-inspector": "0.7.x",
-    "mocha": "1.15.x",
+    "mocha": "1.18.x",
     "sinon": "1.9.x",
     "jscoverage": "0.3.x",
     "mocha-multi": "0.4.x",
     "mocha-sinon": "1.1.x",
     "chai": "1.9.x",
-    "sinon-chai": "2.5.x"
+    "sinon-chai": "2.5.x",
+    "chai-as-promised": "4.1.x",
+    "mocha-as-promised": "~2.0.0",
+    "q": "~1.0.1",
+    "chai-things": "~0.2.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.3.3",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-jscoverage": "~0.1.1",
+    "grunt-env": "~0.4.1",
+    "grunt-mocha-test": "~0.11.0",
+    "grunt-mkdir": "~0.1.1",
+    "grunt-karma": "~0.8.3",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-shell-spawn": "~0.3.0"
   },
   "engine": "node >= 0.10.24"
 }

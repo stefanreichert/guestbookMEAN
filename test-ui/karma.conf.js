@@ -3,10 +3,12 @@ module.exports = function(config){
     basePath : '..',
 
     files : [
+      'app/public/bower_components/jquery/jquery.js',
+      'app/public/bower_components/kendo-ui/**/kendo.ui*.js',
+      'app/public/bower_components/spin.js/spin.js',
+      'app/public/bower_components/bootstrap/**/bootstrap*.js',
       'app/public/bower_components/*/angular.js',
       'app/public/bower_components/*/angular-*.js',
-      'app/public/bower_components/*/spin.js',
-      'app/public/bower_components/*/toaster.js',
       'app/public/scripts/*.js',
       'test-ui/*.js'
     ],
@@ -17,7 +19,7 @@ module.exports = function(config){
 
     reporters: ['progress', 'coverage', 'junit'],
 
-    autoWatch : true,
+    //autoWatch : true,
 
     frameworks: ['jasmine'],
 

@@ -10,7 +10,7 @@ describe('controllers', function(){
 	var testScope;
 
 	// test errors
-	var error = 'just for the fun of it';
+	var error = 'just for the fun of it!';
 	
 	beforeEach(function(){
 		module('controllers');

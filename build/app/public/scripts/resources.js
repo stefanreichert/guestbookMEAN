@@ -1,0 +1,2 @@
+/*! guestbookMEAN 2014-06-10 */
+"use strict";var resources=angular.module("resources",["ngResource"]);resources.factory("Dedication",["$resource",function(a){return a("dedication/:dedicationId",{dedicationId:"@id"})}]);

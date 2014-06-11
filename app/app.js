@@ -4,6 +4,7 @@ var express = require('express');
 var restDedicationRoutes = require('./routes/dedicationRoutes');
 var connector = require('./db/connector');
 var Promise = require('promise');
+var config = require('./config/config');
 var http = require('http');
 var path = require('path');
 
@@ -30,6 +31,7 @@ if ('development' == app.get('env')) {
 }
 
 // REST routes
+app.get('/dedication/author?', restDedicationRoutes.findAuthors);
 app.get('/dedication', restDedicationRoutes.all);
 app.post('/dedication', restDedicationRoutes.create);
 app.delete('/dedication/:id', restDedicationRoutes.remove);
@@ -47,7 +49,7 @@ var startServer = function (){
   });
 };
 
-console.log('Express server starting ...');
+console.log('Express server starting in %s mode ...', config.env);
 connector.connectToDatabase().
   then(function (connection){
     console.log('Successfully connected to a MongoDB at %s [name: %s, poolsize: %d]', connection.serverConfig.name, connection.databaseName, connection.serverConfig.poolSize);

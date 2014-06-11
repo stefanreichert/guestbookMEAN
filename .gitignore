@@ -7,3 +7,4 @@
 /mongoDB
 /app-cov
 /*.log
+/test/dedicationDAOTest.js

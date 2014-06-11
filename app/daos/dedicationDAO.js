@@ -38,8 +38,40 @@ var internalLoadAll = function(dedicationCollection){
     });
 }
 
+var internalFindAuthors = function(dedicationCollection, prefix){
+    console.info('find authors with prefix %s', prefix);
+    var authorMatch = new RegExp('');
+    return new Promise(function (resolve, reject){
+            dedicationCollection.aggregate(
+                [
+                    {
+                        $match : {
+                            author : {$regex : '^' + prefix, $options: 'i'}
+                        }
+                    },
+                    { 
+                        $group : {
+                            _id: 'authors', 
+                            authors: {$addToSet: '$author'}
+                        }
+                    }
+                ],
+                function (error, result) {
+                    if(error){
+                        reject(error);
+                    }
+                    else if(result && result[0]){
+                        resolve(result[0].authors);
+                    }
+                    else{
+                        resolve([]);
+                    }
+                });
+        });
+}
+
 var internalCreate = function(dedicationCollection, author, text){
-    console.info('create dedication with author: %s and text: %', author, text);
+    console.info('create dedication with author: %s and text: %s', author, text);
     return new Promise(function (resolve, reject){
         // insert the new document to the collection
         dedicationCollection.insert(factory.newInstance(author, text), {safe:true}, function(err, newDedications){
@@ -73,6 +105,12 @@ exports.loadAll = function (){
                     return getDedicationCollection().
                         then(function (dedicationCollection){
                             return internalLoadAll(dedicationCollection);
+                        });
+                    }
+exports.findAuthors = function (prefix){
+                    return getDedicationCollection().
+                        then(function (dedicationCollection){
+                            return internalFindAuthors(dedicationCollection, prefix);
                         });
                     }
 exports.create = function (author, text){

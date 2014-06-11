@@ -1,0 +1,2 @@
+/*! guestbookMEAN 2014-06-10 */
+"use strict";var connectionString="mongodb://localhost:27017/guestbook",client=require("mongodb").MongoClient,Promise=require("promise");exports.connectToDatabase=function(){return new Promise(function(a,b){client.connect(connectionString,function(c,d){c?b(c):(exports.connection=d,a(d))})})},exports.disconnectFromDatabase=function(){exports.connection.close()};

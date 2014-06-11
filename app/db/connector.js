@@ -1,12 +1,12 @@
 'use strict'
 
-var connectionString = 'mongodb://localhost:27017/guestbook';
+var config = require('../config/config');
 var client = require('mongodb').MongoClient;
 var Promise = require('promise')
 
-exports.connectToDatabase = function() {
+exports.connectToDatabase = function(connectionString) {
                         	return new Promise(function (resolve, reject){
-                                        client.connect(connectionString, function(err, connection) {
+                                        client.connect(config.dbConnectionString, function(err, connection) {
                                                 if(err) {
                                                         reject(err);
                                                 }
@@ -16,4 +16,7 @@ exports.connectToDatabase = function() {
                                                 }
                                         });
                                 });
+                        }
+exports.disconnectFromDatabase = function() {
+                                exports.connection.close();
                         }

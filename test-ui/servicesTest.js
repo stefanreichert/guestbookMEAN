@@ -124,52 +124,51 @@ describe('services', function() {
 	describe('messageService', function() {
 
 		var _messageService;
-		var _toaster;
+		var _notifications;
 
-		beforeEach(inject(function (toaster, messageService){
+		beforeEach(inject(function (messageService){
 			_messageService = messageService;
-			_toaster = toaster;
+			_notifications = {
+				show : function(message, type) {}
+			}
+			_messageService.setNotifications(_notifications);
 		}));
 
-		it('should define a pop method', function (){
-			expect(_toaster, 'pop').toBeDefined();
-		});
-
 		it('should pop up an error message', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showError(thrownError);
-			expect(_toaster.pop).toHaveBeenCalledWith('error', thrownError);
+			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'error');
 		});
 
 		it('should not pop up an error message in case of an empty text', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showError(null);
-			expect(_toaster.pop).not.toHaveBeenCalled();
+			expect(_notifications.show).not.toHaveBeenCalled();
 		});
 
 		it('should pop up a success message', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showSuccess(thrownError);
-			expect(_toaster.pop).toHaveBeenCalledWith('success', thrownError);
+			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'success');
 		});
 
 		it('should not pop up a success message in case of an empty text', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showSuccess(null);
-			expect(_toaster.pop).not.toHaveBeenCalled();
+			expect(_notifications.show).not.toHaveBeenCalled();
 		});
 
 
 		it('should pop up a warning message', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showWarning(thrownError);
-			expect(_toaster.pop).toHaveBeenCalledWith('warning', thrownError);
+			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'warning');
 		});
 
 		it('should not pop up a warning message in case of an empty text', function (){
-			spyOn(_toaster, 'pop');
+			spyOn(_notifications, 'show');
 			_messageService.showWarning(null);
-			expect(_toaster.pop).not.toHaveBeenCalled();
+			expect(_notifications.show).not.toHaveBeenCalled();
 		});
 	});
 

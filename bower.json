@@ -9,13 +9,12 @@
   "license": "EPL",
   "homepage": "https://github.com/stefanreichert/guestbookMEAN",
   "dependencies": {
-    "AngularJS-Toaster": "~0.4.5",
     "angular-animate": "~1.2.15",
     "angular-resource": "~1.2.15",
     "angular-route": "~1.2.15",
     "angular-mocks": "~1.2.15",
+    "angular-kendo": "~1.0.2",
     "angular-spinner": "~0.4.0",
-    "bootstrap": "~3.1.1",
-    "ui-bootstrap": "~0.10.0"
+    "bootstrap": "~3.1.1"
   }
 }
