@@ -73,7 +73,7 @@ grunt.initConfig({
   grunt.loadNpmTasks('grunt-shell-spawn');
 
 
-  grunt.registerTask('testServer', ['clean:test', 'env:test', 'jscoverage:test', 'mkdir:test', 'shell:mongodb', 'mochaTest:test']);
+  grunt.registerTask('testServer', ['clean:test', 'env:test', 'jscoverage:test', 'mkdir:test', 'mochaTest:test']);
   grunt.registerTask('testServer_background', ['watch:test_background']);
   grunt.registerTask('testUI', ['karma:testUI']);
   grunt.registerTask('testUI_background', ['karma:testUI_background:start', 'watch:testUI_background']);
