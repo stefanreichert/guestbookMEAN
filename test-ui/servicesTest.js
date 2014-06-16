@@ -124,52 +124,70 @@ describe('services', function() {
 	describe('messageService', function() {
 
 		var _messageService;
-		var _notifications;
 
-		beforeEach(inject(function (messageService){
-			_messageService = messageService;
-			_notifications = {
-				show : function(message, type) {}
-			}
-			_messageService.setNotifications(_notifications);
-		}));
-
-		it('should pop up an error message', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showError(thrownError);
-			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'error');
+		describe('with invalid setup', function() {
+			
+			beforeEach(inject(function (messageService){
+				_messageService = messageService;
+			}));
+			
+			it('should log a warning if no messageListener is set', inject(function ($log){
+				spyOn($log, 'warn');
+				_messageService.showError(thrownError);
+				expect($log.warn).toHaveBeenCalledWith('no listeners registered - cannot show [error]: ' + thrownError);
+			}));
 		});
 
-		it('should not pop up an error message in case of an empty text', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showError(null);
-			expect(_notifications.show).not.toHaveBeenCalled();
-		});
+		describe('with valid setup', function() {
+			
+			var _notificationListener;
 
-		it('should pop up a success message', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showSuccess(thrownError);
-			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'success');
-		});
+			beforeEach(inject(function (messageService){
+				_messageService = messageService;
+				_notificationListener = {
+					handleMessage: function(type, message){}
+				}
+				_messageService.addListener(_notificationListener);
+				spyOn(_notificationListener, 'handleMessage');
+			}));
 
-		it('should not pop up a success message in case of an empty text', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showSuccess(null);
-			expect(_notifications.show).not.toHaveBeenCalled();
-		});
+			it('should pop up an error message', function (){
+				_messageService.showError(thrownError);
+				expect(_notificationListener.handleMessage).toHaveBeenCalledWith('error', thrownError);
+			});
+
+			it('should not pop up an error message in case of an empty text', inject(function ($log){
+				spyOn($log, 'warn');
+				_messageService.showError(null);
+				expect(_notificationListener.handleMessage).not.toHaveBeenCalled();
+				expect($log.warn).toHaveBeenCalledWith('not showing [error]: null');
+			}));
+
+			it('should pop up a success message', function (){
+				_messageService.showSuccess(thrownError);
+				expect(_notificationListener.handleMessage).toHaveBeenCalledWith('success', thrownError);
+			});
+
+			it('should not pop up a success message in case of an empty text', inject(function ($log){
+				spyOn($log, 'warn');
+				_messageService.showSuccess(null);
+				expect(_notificationListener.handleMessage).not.toHaveBeenCalled();
+				expect($log.warn).toHaveBeenCalledWith('not showing [success]: null');
+			}));
 
 
-		it('should pop up a warning message', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showWarning(thrownError);
-			expect(_notifications.show).toHaveBeenCalledWith(thrownError, 'warning');
-		});
+			it('should pop up a warning message', function (){
+				_messageService.showWarning(thrownError);
+				expect(_notificationListener.handleMessage).toHaveBeenCalledWith('warning', thrownError);
+			});
 
-		it('should not pop up a warning message in case of an empty text', function (){
-			spyOn(_notifications, 'show');
-			_messageService.showWarning(null);
-			expect(_notifications.show).not.toHaveBeenCalled();
+			it('should not pop up a warning message in case of an empty text', inject(function ($log){
+				spyOn($log, 'warn');
+				_messageService.showWarning(null);
+				expect($log.warn).toHaveBeenCalledWith('not showing [warning]: null');
+			}));
 		});
+		
 	});
 
 	describe('spinnerService', function() {

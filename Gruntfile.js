@@ -51,12 +51,12 @@ grunt.initConfig({
     watch: {
       // run the node tests
       test_background: {
-        files: ['app/*/*.js', 'test/**/*.js'],
+        files: ['app/*/*.js', 'test/*.js'],
         tasks: ['test']
       },
       //run ui tests (karma server needs to be already running)
       testUI_background: {
-        files: ['app/public/**/*.js', 'test-ui/**/*.js'],
+        files: ['app/public/**/*.js', 'test-ui/*.js'],
         tasks: ['karma:testUI_background:run']
       }
     }

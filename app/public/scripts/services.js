@@ -48,19 +48,24 @@ services.service('spinnerService', ['usSpinnerService', function (usSpinnerServi
 
 services.service('messageService', ['$log', function ($log) {
 
-  var _notifications;
+  var messageListeners = [];
 
   var show = function (type, message){
-      if(_notifications && message){
-          _notifications.show(message, type);
+    if(messageListeners.length === 0){
+      $log.warn('no listeners registered - cannot show [' + type + ']: ' + message);
+    }
+    else if(type && message){
+      for (var index = messageListeners.length - 1; index >= 0; index--) {
+        messageListeners[index].handleMessage(type, message);
       }
-      else{
-          $log.log('cannot show [' + type + ']: ' + message);
-      }
+    }
+    else{
+      $log.warn('not showing [' + type + ']: ' + message);
+    }
   }
 
-  this.setNotifications = function (notifications){
-    _notifications = notifications;
+  this.addListener = function (listener){
+    messageListeners.push(listener);
   }
 
   this.showError = function (message, err){

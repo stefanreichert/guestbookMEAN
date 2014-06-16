@@ -3,13 +3,14 @@
 var controllers = angular.module('controllers',['services']);
 
 controllers.controller('notificationsController', ['$log', '$scope', 'messageService', function ($log, $scope, messageService){
-    // the message service requires the kendo notification container
-    $scope.$watch("notifications", function(newValue, oldValue) {
-        if(newValue){
-            $log.log('initializing message service with notifications container');
-            messageService.setNotifications($scope.notifications);
-        }
-    });
+    // register a listener that displays notifications
+    messageService.addListener({
+        handleMessage: function (type, message){
+                if($scope.notifications){
+                    $scope.notifications.show(message, type);
+                }
+            }
+        })
 }]);
 
 controllers.controller('newDedicationController', ['$scope', 'guestbookService', function ($scope, guestbookService){
@@ -20,21 +21,22 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
     $scope.authorCompletionPrefix = '';
     $scope.authors = [];
 
-    $scope.$watch("newAuthor", function(newValue, oldValue) {
-        // at least 3 chars are available
-        if (proposalUpdateRequired(newValue, $scope.authorCompletionPrefix)){
-            $scope.authorCompletionPrefix = newValue.substring(0,3);
-            guestbookService.findAuthors($scope.authorCompletionPrefix).then(
-                function (authors){
-                    $scope.authors = authors;
-                }
-            );
-        }
-        else if ($scope.authors && $scope.authors.length > 0){
-            $scope.authorCompletionPrefix = '';
-            $scope.authors = [];
-        }
-    });
+    $scope.$watch("newAuthor", 
+        function(newValue, oldValue) {
+            // at least 3 chars are available
+            if (proposalUpdateRequired(newValue, $scope.authorCompletionPrefix)){
+                $scope.authorCompletionPrefix = newValue.substring(0,3);
+                guestbookService.findAuthors($scope.authorCompletionPrefix).then(
+                    function (authors){
+                        $scope.authors = authors;
+                    }
+                );
+            }
+            else if ($scope.authors && $scope.authors.length > 0){
+                $scope.authorCompletionPrefix = '';
+                $scope.authors = [];
+            }
+        });
 
     var proposalUpdateRequired = function (authorText, completionPrefix){
         return authorText && authorText.length >= 3 && authorText.substring(0,3) !== completionPrefix;
