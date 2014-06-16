@@ -37,7 +37,7 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
     });
 
     var proposalUpdateRequired = function (authorText, completionPrefix){
-        return authorText && authorText.length >= 3 && authorText.substring(0,3) !== $scope.authorCompletionPrefix;
+        return authorText && authorText.length >= 3 && authorText.substring(0,3) !== completionPrefix;
     }
 }]);
 
