@@ -1,16 +1,14 @@
 'use strict'
 
-var controllers = angular.module('controllers',['services']);
+var controllers = angular.module('controllers',['services', 'ngEventEmitter']);
 
-controllers.controller('notificationsController', ['$log', '$scope', 'messageService', function ($log, $scope, messageService){
-    // register a listener that displays notifications
-    messageService.addListener({
-        handleMessage: function (type, message){
-                if($scope.notifications){
-                    $scope.notifications.show(message, type);
-                }
-            }
-        })
+controllers.controller('notificationsController', ['$log', '$scope', '$on', function ($log, $scope, $on){
+    // subscribe for notifications
+    $on('notification', function (event, args){
+        if($scope.notifications){
+            $scope.notifications.show(args.message, args.type);
+        }
+    });
 }]);
 
 controllers.controller('newDedicationController', ['$scope', 'guestbookService', function ($scope, guestbookService){
@@ -18,23 +16,23 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
     $scope.newText = '';
     $scope.newAuthor = '';
 
-    $scope.authorCompletionPrefix = '';
-    $scope.authors = [];
+    $scope.authorProposalPrefix = '';
+    $scope.authorProposals = [];
 
     $scope.$watch("newAuthor", 
         function(newValue, oldValue) {
             // at least 3 chars are available
-            if (proposalUpdateRequired(newValue, $scope.authorCompletionPrefix)){
-                $scope.authorCompletionPrefix = newValue.substring(0,3);
-                guestbookService.findAuthors($scope.authorCompletionPrefix).then(
+            if (proposalUpdateRequired(newValue, $scope.authorProposalPrefix)){
+                $scope.authorProposalPrefix = newValue.substring(0,3);
+                guestbookService.findAuthors($scope.authorProposalPrefix).then(
                     function (authors){
-                        $scope.authors = authors;
+                        $scope.authorProposals = authors;
                     }
                 );
             }
             else if ($scope.authors && $scope.authors.length > 0){
-                $scope.authorCompletionPrefix = '';
-                $scope.authors = [];
+                $scope.authorProposalPrefix = '';
+                $scope.authorProposals = [];
             }
         });
 
@@ -43,18 +41,18 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
     }
 }]);
 
-controllers.controller('guestbookController', ['$scope', '$log', 'guestbookService', 'spinnerService', 'messageService', function ($scope, $log, guestbookService, spinnerService, messageService) {
+controllers.controller('guestbookController', ['$scope', '$log', 'guestbookService', 'spinnerService', 'notificationService', function ($scope, $log, guestbookService, spinnerService, notificationService) {
     $scope.dateFormat = 'dd.MM.yyyy HH:mm';
     $scope.dedications = [];
 
     this.addDedication = function (author, text) {
         var valid = true;
         if (!author) {
-            messageService.showWarning('cannot add dedication, author is missing!');
+            notificationService.warning('cannot add dedication: author is missing!');
             valid = false;
         }
         if (!text) {
-            messageService.showWarning('cannot add dedication, text is missing!');
+            notificationService.warning('cannot add dedication: text is missing!');
             valid = false;
         }
         if(valid) {
@@ -62,11 +60,11 @@ controllers.controller('guestbookController', ['$scope', '$log', 'guestbookServi
             guestbookService.addDedication(author, text).then(
                 function (dedication){
                     $scope.dedications.unshift(dedication);
-                    messageService.showSuccess('dedication "' + text + '" added');
+                    notificationService.success('dedication "' + text + '" added');
                 }
             ).catch(
                 function(err){
-                    messageService.showError('Failed to add dedication', err);
+                    notificationService.error('Failed to add dedication', err);
                 }
             ).then(
                 function(){
@@ -86,17 +84,17 @@ controllers.controller('guestbookController', ['$scope', '$log', 'guestbookServi
                                 return element._id != id;
                             });
                     $scope.dedications = filteredDedications;
-                    messageService.showSuccess('dedication removed');
+                    notificationService.success('dedication removed');
                 }).
                 catch(function(err){
-                    messageService.showError('Failed to remove dedication', err);
+                    notificationService.error('Failed to remove dedication', err);
                 }).
                 then(function(){
                     spinnerService.stopSpinning();
                 });
         }
         else{
-            messageService.showError('cannot remove dedication, key is missing!');
+            notificationService.error('cannot remove dedication, key is missing!');
         }
     };
 
@@ -109,7 +107,7 @@ controllers.controller('guestbookController', ['$scope', '$log', 'guestbookServi
                 }
             }).
             catch(function(err){
-                messageService.showError('Failed to load dedications', err);
+                notificationService.error('Failed to load dedications', err);
             }).
             then(function(){
                 spinnerService.stopSpinning();

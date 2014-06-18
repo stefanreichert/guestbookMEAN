@@ -3,13 +3,13 @@
   <section class='form-group'>
     <label class='col-sm-1 control-label' for='name'>your&nbsp;name*</label>
     <section class='col-sm-11'>
-      <input class='form-control' style="width: 100%;" name="author" placeholder='your name' ng-model='newAuthor' kendo-auto-complete k-data-source="authors" required>
+      <input class='form-control' style='width: 100%; text-indent:9pt;' name="author" placeholder='your name' ng-model='newAuthor' kendo-auto-complete k-data-source="authorProposals" gb-required>
     </section>
   </section>
   <section class='form-group'>
     <label class='col-sm-1 control-label' for='dedication'>dedication*</label>
     <section class='col-sm-11'>
-      <input class='form-control' name="text" placeholder='your dedication' ng-model='newText' required>
+      <input class='form-control' style='width: 100%;' name='text' placeholder='your dedication' ng-model='newText' gb-required/>
     </section>
   </section>
   <section class='panel btn-toolbar' role='toolbar'>

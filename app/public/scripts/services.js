@@ -1,6 +1,6 @@
 'use strict'
 
-var services = angular.module('services', ['resources', 'angularSpinner']);
+var services = angular.module('services', ['resources', 'angularSpinner', 'ngEventEmitter']);
 
 services.service('guestbookService', ['Dedication', '$http', function (Dedication, $http) {
 
@@ -46,38 +46,27 @@ services.service('spinnerService', ['usSpinnerService', function (usSpinnerServi
     };
 }]);
 
-services.service('messageService', ['$log', function ($log) {
+services.service('notificationService', ['$log', '$emit', function ($log, $emit) {
 
-  var messageListeners = [];
-
-  var show = function (type, message){
-    if(messageListeners.length === 0){
-      $log.warn('no listeners registered - cannot show [' + type + ']: ' + message);
-    }
-    else if(type && message){
-      for (var index = messageListeners.length - 1; index >= 0; index--) {
-        messageListeners[index].handleMessage(type, message);
-      }
+  var emitNotification = function (type, message){
+    if(type && message){
+      $emit('notification', {type: type, message: message});
     }
     else{
-      $log.warn('not showing [' + type + ']: ' + message);
+      $log.warn('ignoring [' + type + ']: ' + message);
     }
   }
 
-  this.addListener = function (listener){
-    messageListeners.push(listener);
-  }
-
-  this.showError = function (message, err){
-      show('error', message);
+  this.error = function (message, err){
+      emitNotification('error', message);
       $log.log(err);
   };
 
-  this.showSuccess = function (message){
-      show('success', message);
+  this.success = function (message){
+      emitNotification('success', message);
   }
 
-  this.showWarning = function (message){
-      show('warning', message);
+  this.warning = function (message){
+      emitNotification('warning', message);
   }
 }]);

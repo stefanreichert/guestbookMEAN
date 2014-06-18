@@ -1,6 +1,6 @@
 'use strict'
 
-var guestbookApp = angular.module('guestbookApp', ['controllers', 'services', 'ngRoute', 'kendo.directives']);
+var guestbookApp = angular.module('guestbookApp', ['controllers', 'services', 'directives', 'ngRoute', 'kendo.directives']);
 
 guestbookApp.config(['$routeProvider',
 	function($routeProvider) {
