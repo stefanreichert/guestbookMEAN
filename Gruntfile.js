@@ -9,8 +9,11 @@ grunt.initConfig({
       }
     },
     clean: {
-      test: {
+      testServer: {
         src: ['test/coverage', 'test/results']
+      },
+      testUI: {
+        src: ['test-ui/coverage', 'test-ui/results']
       }
     },
     mkdir: {
@@ -56,7 +59,7 @@ grunt.initConfig({
       },
       //run ui tests (karma server needs to be already running)
       testUI_background: {
-        files: ['app/public/**/*.js', 'test-ui/*.js'],
+        files: ['app/public/scripts/*.js', 'test-ui/*.js'],
         tasks: ['karma:testUI_background:run']
       }
     }
@@ -73,9 +76,9 @@ grunt.initConfig({
   grunt.loadNpmTasks('grunt-shell-spawn');
 
 
-  grunt.registerTask('testServer', ['clean:test', 'env:test', 'jscoverage:test', 'mkdir:test', 'mochaTest:test']);
+  grunt.registerTask('testServer', ['clean:testServer', 'env:test', 'jscoverage:test', 'mkdir:test', 'mochaTest:test']);
   grunt.registerTask('testServer_background', ['watch:test_background']);
-  grunt.registerTask('testUI', ['karma:testUI']);
+  grunt.registerTask('testUI', ['clean:testUI', 'karma:testUI']);
   grunt.registerTask('testUI_background', ['karma:testUI_background:start', 'watch:testUI_background']);
 
 };

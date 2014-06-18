@@ -21,7 +21,6 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
 
     $scope.$watch("newAuthor", 
         function(newValue, oldValue) {
-            // at least 3 chars are available
             if (proposalUpdateRequired(newValue, $scope.authorProposalPrefix)){
                 $scope.authorProposalPrefix = newValue.substring(0,3);
                 guestbookService.findAuthors($scope.authorProposalPrefix).then(
@@ -37,6 +36,7 @@ controllers.controller('newDedicationController', ['$scope', 'guestbookService',
         });
 
     var proposalUpdateRequired = function (authorText, completionPrefix){
+        // at least 3 chars are available
         return authorText && authorText.length >= 3 && authorText.substring(0,3) !== completionPrefix;
     }
 }]);

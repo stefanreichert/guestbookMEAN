@@ -4,7 +4,7 @@ describe('controllers', function(){
 
 	// standard services
 	var _spinnerService;
-	var _messageService;
+	var _notificationService;
 
 	// test scope
 	var testScope;
@@ -16,38 +16,38 @@ describe('controllers', function(){
 		module('controllers');
 	});
 	
-	beforeEach(inject(function ($q, messageService, spinnerService) {
+	beforeEach(inject(function ($q, notificationService, spinnerService) {
 		_spinnerService = spinnerService;
-		_messageService = messageService;
-		spyOn(_messageService, 'showWarning');
-		spyOn(_messageService, 'showError');
-		spyOn(_messageService, 'showSuccess');
+		_notificationService = notificationService;
+		spyOn(_notificationService, 'warning');
+		spyOn(_notificationService, 'error');
+		spyOn(_notificationService, 'success');
 		spyOn(_spinnerService, 'startSpinning');
 		spyOn(_spinnerService, 'stopSpinning');
 	}));
 
 	var checkNoMessage = function (count){
-		expect(_messageService.showSuccess).not.toHaveBeenCalled();
-		expect(_messageService.showError).not.toHaveBeenCalled();
-		expect(_messageService.showWarning).not.toHaveBeenCalled();
+		expect(_notificationService.success).not.toHaveBeenCalled();
+		expect(_notificationService.error).not.toHaveBeenCalled();
+		expect(_notificationService.warning).not.toHaveBeenCalled();
 	}
 
 	var checkWarning = function (count){
-		expect(_messageService.showSuccess).not.toHaveBeenCalled();
-		expect(_messageService.showError).not.toHaveBeenCalled();
-		expect(_messageService.showWarning.callCount).toBe(count);
+		expect(_notificationService.success).not.toHaveBeenCalled();
+		expect(_notificationService.error).not.toHaveBeenCalled();
+		expect(_notificationService.warning.callCount).toBe(count);
 	}
 
 	var checkError = function (){
-		expect(_messageService.showWarning).not.toHaveBeenCalled();
-		expect(_messageService.showSuccess).not.toHaveBeenCalled();
-		expect(_messageService.showError.callCount).toBe(1);
+		expect(_notificationService.warning).not.toHaveBeenCalled();
+		expect(_notificationService.success).not.toHaveBeenCalled();
+		expect(_notificationService.error.callCount).toBe(1);
 	}
 
 	var checkSuccess = function (){
-		expect(_messageService.showWarning).not.toHaveBeenCalled();
-		expect(_messageService.showError).not.toHaveBeenCalled();
-		expect(_messageService.showSuccess.callCount).toBe(1);
+		expect(_notificationService.warning).not.toHaveBeenCalled();
+		expect(_notificationService.error).not.toHaveBeenCalled();
+		expect(_notificationService.success.callCount).toBe(1);
 	}
 
 	var checkSpinning = function (){
