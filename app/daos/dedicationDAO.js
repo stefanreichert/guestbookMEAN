@@ -74,13 +74,13 @@ var internalCreate = function(dedicationCollection, author, text){
     console.info('create dedication with author: %s and text: %s', author, text);
     return new Promise(function (resolve, reject){
         // insert the new document to the collection
-        dedicationCollection.insert(factory.newInstance(author, text), {safe:true}, function(err, newDedications){
+        dedicationCollection.insert(factory.newInstance(author, text), {safe:true}, function(err, result){
             if(err) {
                 reject(err);
             }
             else{
-                console.info("created dedication with id %s", newDedications[0]._id);
-                resolve(newDedications[0]);
+                console.info("created dedication with id %s", result.ops[0]._id);
+                resolve(result.ops[0]);
             }
         });
     });
