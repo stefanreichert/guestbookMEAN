@@ -35,6 +35,13 @@ Here is the list of commands available for the guestbook showcase.
 +  ``npm run server`` will launch the guestbook HTTP server on port 3000. (blocking call)
 +  ``npm run guestbook`` will open the guestbook web page in the browser (windows only, sorry for that...).
 
+## launch with docker
+You might alternatively run the guestbook application with docker. The guestbook comes with two docker containers.
+### mongodb container
+The mongodb container contains the MongoDB. Execute ``docker build -t <your-username>/centos-mongodb .`` in the subfolder docker-mongodb to build the container and run it by executing ``docker run -itd -p 27017:27017 --name mongodb <your-username>/centos-mongodb``.
+### guestbook container
+The guestbook container contains the application. Execute ``docker build -t <your-username>/centos-guestbook .`` in the root folder to build the container and run it by executing ``docker run -itd -p 3000:3000 --link mongodb:mongodb --name guestbook <your-username>/centos-guestbook``. As you can see, the guestbook container is linked to the mongodb conatiner in order to be abled to access the database.
+
 ##tests 
 The showcase comes with both UI and server side unit tests. These tests can either be run directly or repeatingly in the background on file change.
 Here is the list of grunt tasks available
@@ -43,7 +50,6 @@ Here is the list of grunt tasks available
 +  ``grunt testServer_background`` starts a watcher on the server side source files as well as on the tests and executes the tests on change. (blocking call)
 +  ``grunt testUI`` runs the [jasmine](http://jasmine.github.io/) UI tests with [karma](http://karma-runner.github.io/0.12/index.html). The run will provide an [karma junit report](https://github.com/karma-runner/karma-junit-reporter) and a [karma coverage report](https://github.com/karma-runner/karma-coverage).
 +  ``grunt testUI_background`` starts a watcher on the UI source files as well as on the UI tests and executes the UI tests on change. (blocking call)
-
 
 ##overview
 As already mentioned, the guestbook showcase is a pretty simple application.
