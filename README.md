@@ -38,7 +38,7 @@ Here is the list of commands available for the guestbook showcase.
 ## launch with docker
 You might alternatively run the guestbook application with docker. The guestbook comes with two docker containers.
 ### mongodb container
-The mongodb container contains the MongoDB. Execute ``docker build -t <your-username>/centos-mongodb .`` in the subfolder docker-mongodb to build the container and run it by executing ``docker run -itd -p 27017:27017 --name mongodb <your-username>/centos-mongodb``.
+The mongodb container contains the MongoDB. Execute ``docker build -t <your-username>/centos-mongodb .`` in the subfolder docker-mongoDB to build the container and run it by executing ``docker run -itd -p 27017:27017 --name mongodb <your-username>/centos-mongodb``.
 ### guestbook container
 The guestbook container contains the application. Execute ``docker build -t <your-username>/centos-guestbook .`` in the root folder to build the container and run it by executing ``docker run -itd -p 3000:3000 --link mongodb:mongodb --name guestbook <your-username>/centos-guestbook``. As you can see, the guestbook container is linked to the mongodb conatiner in order to be abled to access the database.
 
