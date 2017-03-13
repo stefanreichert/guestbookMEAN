@@ -46,7 +46,7 @@ The guestbook container contains the application. Execute ``docker build -t <you
 The showcase comes with both UI and server side unit tests. These tests can either be run directly or repeatingly in the background on file change.
 Here is the list of grunt tasks available
 
-+  ``grunt testServer`` runs the [mocha](http://visionmedia.github.io/mocha/) tests for the node application. It uses [chai](http://chaijs.com/) for the assert statements and [sinon](http://sinonjs.org/) for stubbing. The run will provide an [xunit](http://xunitjs.codeplex.com/) report and a [jscoverage coverage report](http://siliconforks.com/jscoverage).
++  ``grunt testServer`` runs the [mocha](http://mochajs.org/) tests for the node application. It uses [chai](http://chaijs.com/) for the assert statements and [sinon](http://sinonjs.org/) for stubbing. The run will provide an [xunit](http://xunitjs.codeplex.com/) report and a [jscoverage coverage report](http://siliconforks.com/jscoverage).
 +  ``grunt testServer_background`` starts a watcher on the server side source files as well as on the tests and executes the tests on change. (blocking call)
 +  ``grunt testUI`` runs the [jasmine](http://jasmine.github.io/) UI tests with [karma](http://karma-runner.github.io/0.12/index.html). The run will provide an [karma junit report](https://github.com/karma-runner/karma-junit-reporter) and a [karma coverage report](https://github.com/karma-runner/karma-coverage).
 +  ``grunt testUI_background`` starts a watcher on the UI source files as well as on the UI tests and executes the UI tests on change. (blocking call)
